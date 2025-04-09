@@ -1,5 +1,5 @@
 export const departmentOverview = {
-    title: " CSD Department Overview",
+    title: "Department Overview",
     description:
       "The Department of Computer Science & Design and Computer Science & Information Technology is committed to excellence in teaching, research, and innovation.",
   };
