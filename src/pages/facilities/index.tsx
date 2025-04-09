@@ -115,7 +115,7 @@ const FacilitiesPage = () => {
                 <ArrowRight className="w-6 h-6 ml-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover:translate-x-0" />
               </button>
               <button className="group border-2 border-white text-white px-10 py-5 rounded-xl font-semibold hover:bg-white hover:text-blue-700 transition-all duration-300 flex items-center justify-center transform hover:scale-105">
-                Schedule a Tour
+                Schedule  Tour
                 <ArrowRight className="w-6 h-6 ml-3 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-[-10px] group-hover:translate-x-0" />
               </button>
             </div>
