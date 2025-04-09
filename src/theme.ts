@@ -52,7 +52,7 @@ export const theme = createTheme({
     MuiAppBar: {
       styleOverrides: {
         root: {
-          backgroundColor: '#FFD700',
+          backgroundColor: '#FFFFFF',
           color: '#212121',
         },
       },
@@ -60,7 +60,7 @@ export const theme = createTheme({
     MuiDrawer: {
       styleOverrides: {
         paper: {
-          backgroundColor: '#FFFDE7',
+          backgroundColor: '#FFFFFF',
         },
       },
     },

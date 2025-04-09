@@ -40,7 +40,7 @@ const Sidebar = ({ mobileOpen, onClose }: SidebarProps) => {
   const drawer = (
     <Box sx={{ mt: 2 }}>
       <Box sx={{ px: 2, mb: 3 }}>
-        <Typography variant="h6" color="primary" sx={{ fontWeight: 'bold' }}>
+        <Typography variant="h2" color="primary" sx={{ fontWeight: 'bold' }}>
           CSD & CSIT
         </Typography>
       </Box>
