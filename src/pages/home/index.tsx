@@ -9,7 +9,6 @@ const Home = () => {
           {title}
         </Typography>
 
-        {/* Department Overview */}
         <Paper sx={{ p: 3, mb: 4 }}>
           <Typography variant="h2" gutterBottom>
             {departmentOverview.title}
@@ -17,7 +16,6 @@ const Home = () => {
           <Typography>{departmentOverview.description}</Typography>
         </Paper>
 
-        {/* Announcements */}
         <Grid container spacing={4}>
           <Grid item xs={12} md={8}>
             <Paper sx={{ p: 3, height: '100%' }}>
