@@ -34,7 +34,7 @@ const menuItems = [
   { text: 'Projects', icon: <ScienceIcon />, path: '/research' },
   { text: 'Faculty', icon: <PeopleIcon />, path: '/faculty' },
   { text: 'Academic', icon: <CalendarIcon />, path: '/academic' },
-  // { text: 'Facilities', icon: <DomainIcon />, path: '/facilities' },
+  { text: 'Facilities', icon: <DomainIcon />, path: '/facilities' },
 ];
 
 const Sidebar = ({ mobileOpen, onClose }: SidebarProps) => {
