@@ -1,5 +1,14 @@
-import React from 'react';
-import { Mail, MapPin, Bookmark, Award, BookOpen, ExternalLink, Globe, Clock } from 'lucide-react';
+import React from "react";
+import {
+  Mail,
+  MapPin,
+  Bookmark,
+  Award,
+  BookOpen,
+  ExternalLink,
+  Globe,
+  Clock,
+} from "lucide-react";
 
 interface Faculty {
   id: number;
@@ -16,54 +25,52 @@ interface Faculty {
 }
 
 const facultyData: Faculty[] = [
-  {
-    id: 1,
-    name: "Dr. Sarah Johnson",
-    role: "Professor & HOD",
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400",
-    qualifications: [
-      "Ph.D. in Computer Science, MIT",
-      "M.Tech in AI, Stanford University"
-    ],
-    researchInterests: [
-      "Artificial Intelligence",
-      "Machine Learning",
-      "Computer Vision",
-      "Neural Networks"
-    ],
-    email: "sarah.johnson@university.edu",
-    office: "Room 301, CS Building",
-    publications: [
-      "Advanced Machine Learning Algorithms for Big Data Processing - International Journal of Computer Science, 2024",
-      "AI in Modern Computing - IEEE Transactions, 2023"
-    ],
-    officeHours: "Monday & Wednesday, 2:00 PM - 4:00 PM",
-    website: "https://sarahjohnson.edu"
-  },
+ 
   {
     id: 2,
-    name: "Dr. Michael Chen",
+    name: "Sindhuri Suseela Mantena",
     role: "Associate Professor",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400",
-    qualifications: [
-      "Ph.D. in Data Science, Berkeley",
-      "M.S. in Computer Science, UCLA"
-    ],
+    image: "src/pages/faculty/img/b.jpg",
+    qualifications: ["MTech", "PHD"],
     researchInterests: [
-      "Big Data Analytics",
-      "Cloud Computing",
-      "Distributed Systems",
-      "Blockchain"
+      " Machine learning",
+      "Deep learning",
+      "Java",
+      "C",
+      "Data Structures",
+      "Computer",
+      "Organization",
+      "Design thinking",
+      "dld",
     ],
     email: "michael.chen@university.edu",
     office: "Room 302, CS Building",
     publications: [
       "Novel Approaches in Cloud Computing Security - IEEE Transactions, 2024",
-      "Distributed Systems in Practice - ACM Digital Library, 2023"
+      "Distributed Systems in Practice - ACM Digital Library, 2023",
     ],
     officeHours: "Tuesday & Thursday, 1:00 PM - 3:00 PM",
-    website: "https://michaelchen.edu"
-  }
+    website: "https://michaelchen.edu",
+  },
+  
+  {
+    id: 1,
+    name: "PODURU  VENKATA SURYA",
+    role: "Professor & HOD",
+    image: "src/pages/faculty/img/a.jpg",
+    qualifications: ["M.Tech in AI, Stanford University"],
+    researchInterests: [
+      "Computer science"
+    ],
+    email: "sarah.johnson@university.edu",
+    office: "Room 301, CS Building",
+    publications: [
+      "Advanced Machine Learning Algorithms for Big Data Processing - International Journal of Computer Science, 2024",
+      "AI in Modern Computing - IEEE Transactions, 2023",
+    ],
+    officeHours: "Monday & Wednesday, 2:00 PM - 4:00 PM",
+    website: "https://sarahjohnson.edu",
+  },
 ];
 
 const FacultyPage: React.FC = () => {
@@ -78,7 +85,8 @@ const FacultyPage: React.FC = () => {
               Meet Our Distinguished Faculty
             </h1>
             <p className="text-xl text-indigo-100 max-w-3xl mx-auto leading-relaxed">
-              Pioneering the future of computer science through groundbreaking research and exceptional education.
+              Pioneering the future of computer science through groundbreaking
+              research and exceptional education.
             </p>
           </div>
         </div>
@@ -102,8 +110,12 @@ const FacultyPage: React.FC = () => {
                     />
                   </div>
                   <div className="text-center md:text-left">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">{faculty.name}</h2>
-                    <p className="text-lg text-indigo-600 font-semibold mb-3">{faculty.role}</p>
+                    <h2 className="text-3xl font-bold text-gray-900 mb-2">
+                      {faculty.name}
+                    </h2>
+                    <p className="text-lg text-indigo-600 font-semibold mb-3">
+                      {faculty.role}
+                    </p>
                     <div className="flex flex-wrap justify-center md:justify-start gap-3">
                       {faculty.website && (
                         <a
@@ -128,11 +140,16 @@ const FacultyPage: React.FC = () => {
                     <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-4">
                       <div className="flex items-center space-x-2 mb-3">
                         <Award className="w-5 h-5 text-indigo-600" />
-                        <h3 className="text-lg font-semibold text-gray-900">Qualifications</h3>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          Qualifications
+                        </h3>
                       </div>
                       <ul className="space-y-2 pl-4">
                         {faculty.qualifications.map((qual, index) => (
-                          <li key={index} className="text-gray-700 flex items-start">
+                          <li
+                            key={index}
+                            className="text-gray-700 flex items-start"
+                          >
                             <span className="inline-block w-2 h-2 bg-indigo-400 rounded-full mt-2 mr-2" />
                             {qual}
                           </li>
@@ -149,11 +166,15 @@ const FacultyPage: React.FC = () => {
                         </div>
                         <div className="flex items-center space-x-2">
                           <MapPin className="w-5 h-5 text-purple-600" />
-                          <span className="text-gray-700">{faculty.office}</span>
+                          <span className="text-gray-700">
+                            {faculty.office}
+                          </span>
                         </div>
                         <div className="flex items-center space-x-2">
                           <Clock className="w-5 h-5 text-purple-600" />
-                          <span className="text-gray-700">{faculty.officeHours}</span>
+                          <span className="text-gray-700">
+                            {faculty.officeHours}
+                          </span>
                         </div>
                       </div>
                     </div>
@@ -165,7 +186,9 @@ const FacultyPage: React.FC = () => {
                     <div>
                       <div className="flex items-center space-x-2 mb-3">
                         <Bookmark className="w-5 h-5 text-indigo-600" />
-                        <h3 className="text-lg font-semibold text-gray-900">Research Interests</h3>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          Subjects
+                        </h3>
                       </div>
                       <div className="flex flex-wrap gap-2">
                         {faculty.researchInterests.map((interest, index) => (
@@ -183,11 +206,16 @@ const FacultyPage: React.FC = () => {
                     <div>
                       <div className="flex items-center space-x-2 mb-3">
                         <BookOpen className="w-5 h-5 text-indigo-600" />
-                        <h3 className="text-lg font-semibold text-gray-900">Recent Publications</h3>
+                        <h3 className="text-lg font-semibold text-gray-900">
+                          Recent Publications
+                        </h3>
                       </div>
                       <ul className="space-y-3">
                         {faculty.publications.map((pub, index) => (
-                          <li key={index} className="group flex items-start space-x-2 bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors">
+                          <li
+                            key={index}
+                            className="group flex items-start space-x-2 bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors"
+                          >
                             <ExternalLink className="w-4 h-4 text-gray-400 mt-1 flex-shrink-0 group-hover:text-indigo-600 transition-colors" />
                             <span className="text-gray-700 text-sm">{pub}</span>
                           </li>

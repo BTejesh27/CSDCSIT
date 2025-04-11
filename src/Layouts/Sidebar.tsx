@@ -15,6 +15,8 @@ import {
   CalendarMonth as CalendarIcon,
   Science as ScienceIcon,
   Domain as DomainIcon,
+  School as SchoolIcon,
+  
 } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 
@@ -28,10 +30,11 @@ interface SidebarProps {
 const menuItems = [
   { text: 'Home', icon: <HomeIcon />, path: '/' },
   { text: 'About', icon: <InfoIcon />, path: '/about' },
+  { text: 'Placements', icon: <SchoolIcon />, path: '/placements' },
+  { text: 'Projects', icon: <ScienceIcon />, path: '/research' },
   { text: 'Faculty', icon: <PeopleIcon />, path: '/faculty' },
   { text: 'Academic', icon: <CalendarIcon />, path: '/academic' },
-  { text: 'Research', icon: <ScienceIcon />, path: '/research' },
-  { text: 'Facilities', icon: <DomainIcon />, path: '/facilities' },
+  // { text: 'Facilities', icon: <DomainIcon />, path: '/facilities' },
 ];
 
 const Sidebar = ({ mobileOpen, onClose }: SidebarProps) => {
