@@ -2,6 +2,14 @@ import React, { memo } from 'react';
 import { Mail, MapPin, Bookmark, Award, Globe, Clock } from 'lucide-react';
 import { Box, Typography, Grid, Card, CardContent, Avatar, Chip, Link, useTheme } from '@mui/material';
 
+// Import images
+import imgA from './img/a.jpg';
+import imgB from './img/b.jpg';
+import imgC from './img/c.jpg';
+import imgD from './img/d.jpg';
+import imgE from './img/e.jpg';
+import imgF from './img/f.jpg';
+
 interface Faculty {
   id: number;
   name: string;
@@ -20,7 +28,7 @@ const facultyData: Faculty[] = [
     id: 1,
     name: "Surya",
     role: "Assistant Professor & M.Tech",
-    image: "src/assests/images/bhargavi.jpg",
+    image: imgA,
     qualifications: ["M.Tech"],
     researchInterests: ["HCI", "HCI Lab"],
     email: "8985352449",
@@ -32,9 +40,9 @@ const facultyData: Faculty[] = [
     id: 2,
     name: "Sindhuri Suseela Mantena",
     role: "Assistant Professor & M.Tech (PhD)",
-    image: "src/assests/images/bhargavi.jpg",
+    image: imgB,
     qualifications: ["M.Tech", "PhD (Pursuing)"],
-    researchInterests: ["Machine Learning", "C","Deep Learning", "Java",  "Data Structures","DLD", "Computer Organization"],
+    researchInterests: ["Machine Learning", "C", "Deep Learning", "Java", "Data Structures", "DLD", "Computer Organization"],
     email: "mss@srkrec.ac.in",
     office: "N/A",
     officeHours: "N/A",
@@ -44,7 +52,7 @@ const facultyData: Faculty[] = [
     id: 3,
     name: "Pericherla Manoj",
     role: "M.Tech",
-    image: "src/assests/images/bhargavi.jpg",
+    image: imgC,
     qualifications: ["M.Tech"],
     researchInterests: ["Computer Science Engineering"],
     email: "7036256222",
@@ -52,12 +60,11 @@ const facultyData: Faculty[] = [
     officeHours: "N/A",
     website: undefined
   },
-
   {
     id: 4,
     name: "Mr. Praveen Kumar",
     role: "Associate Professor",
-    image: "src/assests/images/d.jpg"  ,
+    image: imgD,
     qualifications: [
       "Ph.D. in Database Systems",
       "M.Tech in Information Systems",
@@ -72,7 +79,7 @@ const facultyData: Faculty[] = [
     id: 5,
     name: "Mr. Mohan Krishna",
     role: "Associate Professor",
-    image: "src/pages/faculty/img/e.jpg",
+    image: imgE,
     qualifications: [
       "Ph.D. in Computer Science",
       "M.Tech in Computer Networks",
@@ -88,7 +95,7 @@ const facultyData: Faculty[] = [
     id: 6,
     name: "Mr. Sunil",
     role: "Professor",
-    image: "src/pages/faculty/img/f.jpg",
+    image: imgF,
     qualifications: [
       "Ph.D. in Database Systems",
       "M.Tech in Computer Science",
