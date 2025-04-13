@@ -57,7 +57,7 @@ const facultyData: Faculty[] = [
     id: 4,
     name: "Mr. Praveen Kumar",
     role: "Associate Professor",
-    image: "src/pages/faculty/img/d.jpg",
+    image: "src/pages/faculty/img/d.jpg"  ,
     qualifications: [
       "Ph.D. in Database Systems",
       "M.Tech in Information Systems",
