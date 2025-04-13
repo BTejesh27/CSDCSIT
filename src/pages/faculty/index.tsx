@@ -44,7 +44,7 @@ const facultyData: Faculty[] = [
     id: 3,
     name: "Pericherla Manoj",
     role: "M.Tech",
-    image: "src/pages/faculty/img/c.jpg",
+    image: "src/assests/images/c.jpg",
     qualifications: ["M.Tech"],
     researchInterests: ["Computer Science Engineering"],
     email: "7036256222",
@@ -57,7 +57,7 @@ const facultyData: Faculty[] = [
     id: 4,
     name: "Mr. Praveen Kumar",
     role: "Associate Professor",
-    image: "src/pages/faculty/img/d.jpg"  ,
+    image: "src/assests/images/d.jpg"  ,
     qualifications: [
       "Ph.D. in Database Systems",
       "M.Tech in Information Systems",
