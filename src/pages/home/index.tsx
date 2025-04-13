@@ -28,38 +28,39 @@ import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
+// Import images
 import prajwalan from '../../assests/images/s.jpeg';
 import codingchallenge from '../../assests/images/tt.jpg';
 import SIHWin from '../../assests/images/SIHWin.jpg';
+import bhargaviImage from '../../assests/images/bhargavi.jpg';
+
 const images = [prajwalan, codingchallenge, SIHWin];
 
 // Updated Contact Info
 const updatedContactInfo = {
   address: "SRKR Engineering College Chinnamiram, Bhimavaram, Andhra Pradesh 534204, India",
   email: "vishnutej2004@gmail.com",
-  phone:"9989948717",
-  whatsapp:"9989948717",
-  mapUrl: "https://www.google.com/maps/search/?api=1&query=SRKR%20Engineering%20College%20Chinnamiram%2C%20Bhimavaram%2C%20Chinamiram%20Rural%2C%20Andhra%20Pradesh%20534204%2C%20India"
+  phone: "9989948717",
+  whatsapp: "9989948717",
+  mapUrl: "https://www.google.com/maps/search/?api=1&query=SRKR%20Engineering%20College%20Chinnamiram%2C%20Bhimavaram%2C%20Chinamiram%20Rural%2C%20Andhra%20Pradesh%20534204%2C%20India",
 };
 
-
-
-// News data with images for popup
+// News data with imported images
 const newsItems = [
   {
     id: "#1",
     date: "23-February-2025",
     title: "Financial Progress with Projections at National Level Technical Symposium IINA-25",
-    description: "The National Level Technical Symposium IINA-25 concluded successfully on Saturday with outstanding financial projections and remarkable participation from colleges across the nation. The event featured technical presentations, coding competitions, and innovative project demonstrations.",
-    image: "src/assests/images/bhargavi.jpg",
-    fullContent: "The National Level Technical Symposium IINA-25 concluded successfully on Saturday with outstanding financial projections and remarkable participation from colleges across the nation. The event featured technical presentations, coding competitions, and innovative project demonstrations. Over 500 students from 30 different colleges participated in various events, making it one of the largest technical symposiums in the region. The Department of Computer Science & Information Technology played a key role in organizing the event, ensuring smooth execution of all technical activities. Distinguished guests from industry and academia praised the quality of projects presented and the organizational capabilities of the SRKR Engineering College team. The event also served as a platform for industry-academia interaction, with several companies expressing interest in the innovative projects displayed by the students."
+    description: "The National Level Technical Symposium IINA-25 concluded successfully on Saturday with outstanding financial projections and remarkable participation from colleges across the nation.",
+    image: bhargaviImage,
+    fullContent: "The National Level Technical Symposium IINA-25 concluded successfully on Saturday with outstanding financial projections and remarkable participation from colleges across the nation. The event featured technical presentations, coding competitions, and innovative project demonstrations. Over 500 students from 30 different colleges participated in various events, making it one of the largest technical symposiums in the region. The Department of Computer Science & Information Technology played a key role in organizing the event, ensuring smooth execution of all technical activities. Distinguished guests from industry and academia praised the quality of projects presented and the organizational capabilities of the SRKR Engineering College team. The event also served as a platform for industry-academia interaction, with several companies expressing interest in the innovative projects displayed by the students.",
   },
   {
     date: "27-January-2025",
     title: "Visakha Raghu Engineering College Wins Overall Championship at National Level Go-Kart Championship",
     description: "SRKR Engineering College hosted the prestigious National Level Go-Kart Championship...",
     image: "https://via.placeholder.com/800x400?text=Go-Kart+Championship",
-    fullContent: "SRKR Engineering College hosted the prestigious National Level Go-Kart Championship, drawing participation from engineering colleges across India. In an exciting finale, Visakha Raghu Engineering College emerged as the overall champion, demonstrating exceptional engineering skills and racing strategy. The three-day event showcased the technical prowess of engineering students in designing, building, and racing their custom-made go-karts. The competition was judged on multiple parameters including vehicle design, innovation, performance, and racing time. SRKR Engineering College's team secured the third position, showing remarkable improvement from last year's performance. The event was graced by prominent automobile industry experts who provided valuable feedback to participants and highlighted the importance of practical engineering skills."
+    fullContent: "SRKR Engineering College hosted the prestigious National Level Go-Kart Championship, drawing participation from engineering colleges across India. In an exciting finale, Visakha Raghu Engineering College emerged as the overall champion, demonstrating exceptional engineering skills and racing strategy. The three-day event showcased the technical prowess of engineering students in designing, building, and racing their custom-made go-karts. The competition was judged on multiple parameters including vehicle design, innovation, performance, and racing time. SRKR Engineering College's team secured the third position, showing remarkable improvement from last year's performance. The event was graced by prominent automobile industry experts who provided valuable feedback to participants and highlighted the importance of practical engineering skills.",
   },
   {
     date: "26-January-2025",
@@ -77,14 +78,14 @@ const newsItems = [
   }
 ];
 
-// Events data with images for popup
+// Events data with imported images
 const eventItems = [
   {
     month: "JANUARY",
     day: "23",
     title: "SRKR Go-Kart Championship 2025",
     description: "SRKR Engineering College proudly announces the SRKR Go-Kart Championship 2025, a thrilling platform .....",
-    image: "src/assests/images/bhargavi.jpg",
+    image: bhargaviImage,
     fullContent: "SRKR Engineering College proudly announces the SRKR Go-Kart Championship 2025, a thrilling platform for engineering students to showcase their design and racing skills. Teams from across the country will compete in this three-day event featuring custom-built go-karts designed and manufactured by students. The competition includes various assessment rounds like technical inspection, design evaluation, cost analysis, and finally, the racing event. Registration is open until January 15th, with the event scheduled for January 23-25, 2025. This competition provides an excellent opportunity for students to apply theoretical knowledge to practical engineering challenges while developing teamwork and project management skills."
   },
   {
