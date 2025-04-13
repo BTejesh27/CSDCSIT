@@ -1,14 +1,6 @@
-import React from "react";
-import {
-  Mail,
-  MapPin,
-  Bookmark,
-  Award,
-  BookOpen,
-  ExternalLink,
-  Globe,
-  Clock,
-} from "lucide-react";
+import React, { memo } from 'react';
+import { Mail, MapPin, Bookmark, Award, Globe, Clock } from 'lucide-react';
+import { Box, Typography, Grid, Card, CardContent, Avatar, Chip, Link, useTheme } from '@mui/material';
 
 interface Faculty {
   id: number;
@@ -19,217 +11,280 @@ interface Faculty {
   researchInterests: string[];
   email: string;
   office: string;
-  publications: string[];
   officeHours: string;
   website?: string;
 }
 
 const facultyData: Faculty[] = [
- 
+  {
+    id: 1,
+    name: "Surya",
+    role: "Assistant Professor & M.Tech",
+    image: "src/pages/faculty/img/a.jpg",
+    qualifications: ["M.Tech"],
+    researchInterests: ["HCI", "HCI Lab"],
+    email: "8985352449",
+    office: "N/A",
+    officeHours: "N/A",
+    website: undefined
+  },
   {
     id: 2,
     name: "Sindhuri Suseela Mantena",
-    role: "Associate Professor",
+    role: "Assistant Professor & M.Tech (PhD)",
     image: "src/pages/faculty/img/b.jpg",
-    qualifications: ["MTech", "PHD"],
-    researchInterests: [
-      " Machine learning",
-      "Deep learning",
-      "Java",
-      "C",
-      "Data Structures",
-      "Computer",
-      "Organization",
-      "Design thinking",
-      "dld",
-    ],
-    email: "michael.chen@university.edu",
-    office: "Room 302, CS Building",
-    publications: [
-      "Novel Approaches in Cloud Computing Security - IEEE Transactions, 2024",
-      "Distributed Systems in Practice - ACM Digital Library, 2023",
-    ],
-    officeHours: "Tuesday & Thursday, 1:00 PM - 3:00 PM",
-    website: "https://michaelchen.edu",
+    qualifications: ["M.Tech", "PhD (Pursuing)"],
+    researchInterests: ["Machine Learning", "C","Deep Learning", "Java",  "Data Structures","DLD", "Computer Organization"],
+    email: "mss@srkrec.ac.in",
+    office: "N/A",
+    officeHours: "N/A",
+    website: undefined
   },
-  
   {
-    id: 1,
-    name: "PODURU  VENKATA SURYA",
-    role: "Professor & HOD",
-    image: "src/pages/faculty/img/a.jpg",
-    qualifications: ["M.Tech in AI, Stanford University"],
-    researchInterests: [
-      "Computer science"
-    ],
-    email: "sarah.johnson@university.edu",
-    office: "Room 301, CS Building",
-    publications: [
-      "Advanced Machine Learning Algorithms for Big Data Processing - International Journal of Computer Science, 2024",
-      "AI in Modern Computing - IEEE Transactions, 2023",
-    ],
-    officeHours: "Monday & Wednesday, 2:00 PM - 4:00 PM",
-    website: "https://sarahjohnson.edu",
+    id: 3,
+    name: "Pericherla Manoj",
+    role: "M.Tech",
+    image: "src/pages/faculty/img/c.jpg",
+    qualifications: ["M.Tech"],
+    researchInterests: ["Computer Science Engineering"],
+    email: "7036256222",
+    office: "N/A",
+    officeHours: "N/A",
+    website: undefined
   },
+
+  {
+    id: 4,
+    name: "Mr. Praveen Kumar",
+    role: "Associate Professor",
+    image: "src/pages/faculty/img/d.jpg",
+    qualifications: [
+      "Ph.D. in Database Systems",
+      "M.Tech in Information Systems",
+    ],
+    researchInterests: ["Database Systems", "Big Data", "Data Analytics"],
+    email: "praveenkumar@srkrec.edu.in",
+    office: "Information Technology Department",
+    officeHours: "N/A",
+    website: undefined
+  },
+  {
+    id: 5,
+    name: "Mr. Mohan Krishna",
+    role: "Associate Professor",
+    image: "src/pages/faculty/img/e.jpg",
+    qualifications: [
+      "Ph.D. in Computer Science",
+      "M.Tech in Computer Networks",
+      "B.Tech in Computer Science"
+    ],
+    researchInterests: ["Operating System", "Network Security", "Computer Networks"],
+    email: "mohan.krishna@srkrec.edu.in",
+    office: "Computer Science & Design Department",
+    officeHours: "N/A",
+    website: undefined
+  },
+  {
+    id: 6,
+    name: "Mr. Sunil",
+    role: "Professor",
+    image: "src/pages/faculty/img/f.jpg",
+    qualifications: [
+      "Ph.D. in Database Systems",
+      "M.Tech in Computer Science",
+      "B.Tech in Computer Science"
+    ],
+    researchInterests: ["Database Systems", "Data Analytics", "Data Mining"],
+    email: "sunil@srkrec.edu.in",
+    office: "Computer Science & Design Department",
+    officeHours: "N/A",
+    website: undefined
+  }
 ];
+
+// Reusable FacultyCard Component
+const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
+  const theme = useTheme();
+
+  return (
+    <Card
+      sx={{
+        borderRadius: 16,
+        boxShadow: '0 12px 36px rgba(0, 0, 0, 0.2)',
+        transition: 'transform 0.3s, box-shadow 0.3s',
+        '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)' },
+        background: 'linear-gradient(to bottom, #ffffff, #f9f9ff)',
+        overflow: 'hidden',
+        border: `1px solid ${theme.palette.divider}`,
+      }}
+    >
+      <CardContent>
+        {/* Header */}
+        <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
+          <Avatar
+            src={faculty.image}
+            alt={`${faculty.name}'s photo`}
+            sx={{
+              width: 120,
+              height: 120,
+              border: `4px solid ${theme.palette.background.paper}`,
+              boxShadow: 4,
+              mr: 3,
+            }}
+          />
+          <Box>
+            <Typography variant="h5" fontWeight="bold" color="text.primary">
+              {faculty.name}
+            </Typography>
+            <Typography variant="subtitle1" color="primary">
+              {faculty.role}
+            </Typography>
+            {faculty.website && (
+              <Link href={faculty.website} target="_blank" rel="noopener" underline="hover">
+                <Typography variant="body2" color="text.secondary">
+                  <Globe style={{ width: 16, height: 16, marginRight: 4 }} />
+                  Website
+                </Typography>
+              </Link>
+            )}
+          </Box>
+        </Box>
+
+        {/* Content Grid */}
+        <Grid container spacing={2}>
+          {/* Left Column */}
+          <Grid item xs={12} sm={6}>
+            {/* Qualifications */}
+            <Box sx={{ mb: 3 }}>
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                gutterBottom
+                sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              >
+                <Award style={{ width: 20, height: 20 }} />
+                Qualifications
+              </Typography>
+              <Box sx={{ pl: 3 }}>
+                <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
+                  {faculty.qualifications.map((qual, index) => (
+                    <li key={index} style={{ marginBottom: '0.5rem' }}>
+                      <Typography variant="body2" color="text.secondary">
+                        {qual}
+                      </Typography>
+                    </li>
+                  ))}
+                </ul>
+              </Box>
+            </Box>
+
+            {/* Contact Information */}
+            <Box sx={{ mt: 3 }}>
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                gutterBottom
+                sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              >
+                <Mail style={{ width: 20, height: 20 }} />
+                Contact Information
+              </Typography>
+              <Box sx={{ pl: 3 }}>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}
+                >
+                  <Mail style={{ width: 16, height: 16 }} />
+                  {faculty.email}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}
+                >
+                  <MapPin style={{ width: 16, height: 16 }} />
+                  {faculty.office}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                >
+                  <Clock style={{ width: 16, height: 16 }} />
+                  {faculty.officeHours}
+                </Typography>
+              </Box>
+            </Box>
+          </Grid>
+
+          {/* Right Column */}
+          <Grid item xs={12} sm={6}>
+            {/* Research Interests */}
+            <Box sx={{ mb: 3 }}>
+              <Typography
+                variant="subtitle1"
+                fontWeight="bold"
+                gutterBottom
+                sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+              >
+                <Bookmark style={{ width: 20, height: 20 }} />
+Subjects               </Typography>
+              <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, pl: 3 }}>
+                {faculty.researchInterests.map((interest, index) => (
+                  <Chip
+                    key={index}
+                    label={interest}
+                    sx={{
+                      background: 'linear-gradient(to right, #4f46e5, #9333ea)',
+                      color: 'white',
+                      fontWeight: 'bold',
+                    }}
+                  />
+                ))}
+              </Box>
+            </Box>
+          </Grid>
+        </Grid>
+      </CardContent>
+    </Card>
+  );
+});
 
 const FacultyPage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50">
-      <div className="container mx-auto px-4 py-16">
-        {/* Header with animated background */}
-        <div className="relative text-center mb-20 p-8 rounded-3xl bg-gradient-to-r from-indigo-600 to-purple-600 shadow-xl overflow-hidden">
-          <div className="absolute inset-0 bg-grid-white/[0.2] bg-[size:20px_20px]" />
-          <div className="relative z-10">
-            <h1 className="text-5xl md:text-6xl font-bold text-white mb-6 animate-fade-in">
-              Meet Our Distinguished Faculty
-            </h1>
-            <p className="text-xl text-indigo-100 max-w-3xl mx-auto leading-relaxed">
-              Pioneering the future of computer science through groundbreaking
-              research and exceptional education.
-            </p>
-          </div>
-        </div>
+    <Box sx={{ minHeight: '100vh', background: 'linear-gradient(to bottom right, #f0f4ff, #e8f0ff)' }}>
+      <Box sx={{ maxWidth: '1200px', mx: 'auto', px: 2, py: 4 }}>
+        {/* Header */}
+        <Box
+          sx={{
+            textAlign: 'center',
+            mb: 5,
+            p: 4,
+            borderRadius: 4,
+            background: 'linear-gradient(to right, #4f46e5, #9333ea)',
+            color: 'white',
+            boxShadow: 6,
+          }}
+        >
+          <Typography variant="h2" fontWeight="bold" gutterBottom>
+            Meet Our Distinguished Faculty
+          </Typography>
+          <Typography variant="h6" sx={{ maxWidth: '600px', mx: 'auto' }}>
+            Pioneering the future of computer science through groundbreaking research and exceptional education.
+          </Typography>
+        </Box>
 
         {/* Faculty Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mb-16">
+        <Grid container spacing={4}>
           {facultyData.map((faculty) => (
-            <div
-              key={faculty.id}
-              className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="p-8">
-                {/* Header */}
-                <div className="flex flex-col md:flex-row items-center md:items-start space-y-4 md:space-y-0 md:space-x-6 mb-8">
-                  <div className="relative">
-                    <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full blur-lg opacity-20 group-hover:opacity-30 transition-opacity" />
-                    <img
-                      src={faculty.image}
-                      alt={faculty.name}
-                      className="w-32 h-32 rounded-full object-cover border-4 border-white shadow-xl relative z-10"
-                    />
-                  </div>
-                  <div className="text-center md:text-left">
-                    <h2 className="text-3xl font-bold text-gray-900 mb-2">
-                      {faculty.name}
-                    </h2>
-                    <p className="text-lg text-indigo-600 font-semibold mb-3">
-                      {faculty.role}
-                    </p>
-                    <div className="flex flex-wrap justify-center md:justify-start gap-3">
-                      {faculty.website && (
-                        <a
-                          href={faculty.website}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center space-x-1 text-gray-600 hover:text-indigo-600 transition-colors"
-                        >
-                          <Globe className="w-4 h-4" />
-                          <span>Website</span>
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Content Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* Left Column */}
-                  <div className="space-y-6">
-                    {/* Qualifications */}
-                    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl p-4">
-                      <div className="flex items-center space-x-2 mb-3">
-                        <Award className="w-5 h-5 text-indigo-600" />
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          Qualifications
-                        </h3>
-                      </div>
-                      <ul className="space-y-2 pl-4">
-                        {faculty.qualifications.map((qual, index) => (
-                          <li
-                            key={index}
-                            className="text-gray-700 flex items-start"
-                          >
-                            <span className="inline-block w-2 h-2 bg-indigo-400 rounded-full mt-2 mr-2" />
-                            {qual}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Contact Information */}
-                    <div className="bg-gradient-to-br from-purple-50 to-pink-50 rounded-xl p-4">
-                      <div className="space-y-3">
-                        <div className="flex items-center space-x-2">
-                          <Mail className="w-5 h-5 text-purple-600" />
-                          <span className="text-gray-700">{faculty.email}</span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <MapPin className="w-5 h-5 text-purple-600" />
-                          <span className="text-gray-700">
-                            {faculty.office}
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                          <Clock className="w-5 h-5 text-purple-600" />
-                          <span className="text-gray-700">
-                            {faculty.officeHours}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column */}
-                  <div className="space-y-6">
-                    {/* Research Interests */}
-                    <div>
-                      <div className="flex items-center space-x-2 mb-3">
-                        <Bookmark className="w-5 h-5 text-indigo-600" />
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          Subjects
-                        </h3>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {faculty.researchInterests.map((interest, index) => (
-                          <span
-                            key={index}
-                            className="px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-full text-sm font-medium shadow-md hover:shadow-lg transition-shadow"
-                          >
-                            {interest}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Publications */}
-                    <div>
-                      <div className="flex items-center space-x-2 mb-3">
-                        <BookOpen className="w-5 h-5 text-indigo-600" />
-                        <h3 className="text-lg font-semibold text-gray-900">
-                          Recent Publications
-                        </h3>
-                      </div>
-                      <ul className="space-y-3">
-                        {faculty.publications.map((pub, index) => (
-                          <li
-                            key={index}
-                            className="group flex items-start space-x-2 bg-gray-50 p-3 rounded-lg hover:bg-gray-100 transition-colors"
-                          >
-                            <ExternalLink className="w-4 h-4 text-gray-400 mt-1 flex-shrink-0 group-hover:text-indigo-600 transition-colors" />
-                            <span className="text-gray-700 text-sm">{pub}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <Grid item xs={12} md={6} key={faculty.id}>
+              <FacultyCard faculty={faculty} />
+            </Grid>
           ))}
-        </div>
-      </div>
-    </div>
+        </Grid>
+      </Box>
+    </Box>
   );
 };
 
