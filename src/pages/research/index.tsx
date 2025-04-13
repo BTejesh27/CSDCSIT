@@ -12,35 +12,46 @@ import {
 } from "@mui/material";
 import { ThemeProvider, createTheme, useTheme } from "@mui/material/styles";
 
+import magicaldbImage from "./images/magicaldb.png";
+import boImage from "./images/bo.png";
+import srkrImage from "./images/srkr.png";
+import svctImage from "./images/svct.png";
+import csdImage from "./images/csd.png";
+import spellImage from "./images/spell.png";
+import coImage from "./images/co.png";
+import bonlineImage from "./images/bonline.png";
+import bdImage from "./images/bd.png";
+
+// Update projectList and startups to use imported images
 const projectList = [
   {
     title: "MagicalDB - HCU",
-    image: "src/pages/research/images/magicaldb.png",
+    image: magicaldbImage,
     link: "http://www.manjarilab.com/manjari/databases/magicaldb/",
   },
   {
     title: "Bhimavaram Tennis",
-    image: "src/pages/research/images/bo.png",
+    image: boImage,
     link: "https://www.bhimavaramtennis.com/",
   },
   {
     title: "SRKR Engineering College",
-    image: "src/pages/research/images/srkr.png",
+    image: srkrImage,
     link: "https://srkrec.edu.in/",
   },
   {
     title: "SVCET College Website",
-    image: "src/pages/research/images/svct.png",
+    image: svctImage,
     link: "http://svcet.net/new/",
   },
   {
     title: "CSD Courseware",
-    image: "src/pages/research/images/csd.png",
+    image: csdImage,
     link: "https://csd27.ct.ws/CSD/",
   },
   {
     title: "SpellBee - SRKR",
-    image: "src/pages/research/images/spell.png",
+    image: spellImage,
     link: "https://srkrec.edu.in/spellbee2k24/",
   },
 ];
@@ -50,21 +61,21 @@ const startups = [
     title: "Campus Online",
     description:
       "A specialized database solution developed for Hyderabad Central University to manage research data efficiently.",
-    image: "src/pages/research/images/co.png",
+    image: coImage,
     link: "https://campusonline.mini.store/",
   },
   {
     title: "Bhimavaram Online",
     description:
       "A comprehensive platform for managing local tennis tournaments, player profiles, and event scheduling.",
-    image: "src/pages/research/images/bonline.png",
+    image: bonlineImage,
     link: "https://bhimavaram.online/",
   },
   {
     title: "Bhimavaram Digitals",
     description:
       "The official website for SRKR Engineering College showcasing academic programs, campus facilities, and student achievements.",
-    image: "src/pages/research/images/bd.png",
+    image: bdImage,
     link: "https://www.bhimavaramdigitals.com/",
   },
 ];
@@ -323,4 +334,3 @@ function App() {
   }
 
   export default App;
-  
