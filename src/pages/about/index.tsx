@@ -1,4 +1,4 @@
-import { Box, Container, Typography, Paper, Grid } from '@mui/material';
+import { Box, Container, Typography, Paper, Grid, useTheme } from '@mui/material';
 import aboutData from './api/Home';
 import SIHWin from '../../assests/images/SIHWin.jpg';
 import Prajwalan from '../../assests/images/prajwalan.jpg';
@@ -24,10 +24,7 @@ const sectionStyle = {
 };
 
 const About = () => {
-<<<<<<< Updated upstream
-=======
   const theme = useTheme();
->>>>>>> Stashed changes
   const { title, vision, mission, history, hodMessage, achievements } = aboutData;
 
   return (
@@ -45,11 +42,7 @@ const About = () => {
 
           {/* Vision & Mission */}
           <Paper sx={sectionStyle}>
-<<<<<<< Updated upstream
-            <Typography variant="h3" gutterBottom sx={{ color: '#1976d2' }}>
-=======
             <Typography variant="h3" gutterBottom sx={{ color: '#1976d2', fontWeight: 'bold' }}>
->>>>>>> Stashed changes
               Vision & Mission
             </Typography>
             <Box sx={{ mb: 3 }}>
