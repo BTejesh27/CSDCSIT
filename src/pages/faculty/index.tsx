@@ -120,7 +120,6 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
         boxShadow: '0 12px 36px rgba(0, 0, 0, 0.2)',
         transition: 'transform 0.3s, box-shadow 0.3s',
         '&:hover': { transform: 'translateY(-10px)', boxShadow: '0 20px 50px rgba(0, 0, 0, 0.3)' },
-        background: 'linear-gradient(to bottom, #ffffff, #f9f9ff)',
         overflow: 'hidden',
         border: `1px solid ${theme.palette.divider}`,
       }}
@@ -259,25 +258,36 @@ Subjects               </Typography>
 });
 
 const FacultyPage: React.FC = () => {
+  const theme = useTheme(); // Access the current theme
+
   return (
-    <Box sx={{ minHeight: '100vh', background: 'linear-gradient(to bottom right, #f0f4ff, #e8f0ff)' }}>
-      <Box sx={{ maxWidth: '1200px', mx: 'auto', px: 2, py: 4 }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        background: theme.palette.mode === "dark"
+          ? "linear-gradient(to bottom right, #121212, #1e1e1e)" // Dark mode background
+          : "linear-gradient(to bottom right, #f0f4ff, #e8f0ff)", // Light mode background
+      }}
+    >
+      <Box sx={{ maxWidth: "1200px", mx: "auto", px: 2, py: 4 }}>
         {/* Header */}
         <Box
           sx={{
-            textAlign: 'center',
+            textAlign: "center",
             mb: 5,
             p: 4,
             borderRadius: 4,
-            background: 'linear-gradient(to right, #4f46e5, #9333ea)',
-            color: 'white',
+            background: theme.palette.mode === "dark"
+              ? "linear-gradient(to right, #333333, #444444)" // Dark mode header
+              : "linear-gradient(to right, #4f46e5, #9333ea)", // Light mode header
+            color: "white",
             boxShadow: 6,
           }}
         >
           <Typography variant="h2" fontWeight="bold" gutterBottom>
             Meet Our Distinguished Faculty
           </Typography>
-          <Typography variant="h6" sx={{ maxWidth: '600px', mx: 'auto' }}>
+          <Typography variant="h6" sx={{ maxWidth: "600px", mx: "auto" }}>
             Pioneering the future of computer science through groundbreaking research and exceptional education.
           </Typography>
         </Box>

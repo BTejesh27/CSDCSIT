@@ -114,7 +114,6 @@ const FacilitiesPage = () => {
     <Box
       sx={{
         minHeight: "100vh",
-        background: "linear-gradient(to bottom, #f8fafc, #f1f5f9)",
       }}
     >
       {/* Hero Section */}
@@ -186,7 +185,6 @@ const FacilitiesPage = () => {
           position: "sticky",
           top: 0,
           zIndex: 50,
-          backgroundColor: "rgba(255,255,255,0.9)",
           backdropFilter: "blur(10px)",
           boxShadow: 3,
           borderRadius: 3,
@@ -277,7 +275,6 @@ const FacilitiesPage = () => {
                 border: "1px solid",
                 borderColor: "divider",
                 mb: 4,
-                background: "white",
               }}
             >
               <Box sx={{ p: 4 }}>
@@ -365,8 +362,6 @@ const FacilitiesPage = () => {
                           display: "flex",
                           alignItems: "center",
                           borderRadius: 2,
-                          background:
-                            "linear-gradient(to right, #f8fafc, #ffffff)",
                           border: "1px solid",
                           borderColor: "divider",
                           transition: "all 0.3s ease",
@@ -374,8 +369,7 @@ const FacilitiesPage = () => {
                           "&:hover": {
                             boxShadow: 4,
                             transform: "translateY(-5px)",
-                            background:
-                              "linear-gradient(to right, #f1f5f9, #ffffff)",
+                           
                           },
                         }}
                       >
@@ -414,8 +408,6 @@ const FacilitiesPage = () => {
                           p: 2,
                           textAlign: "center",
                           borderRadius: 2,
-                          background:
-                            "linear-gradient(to right, #f8fafc, #ffffff)",
                           height: "100%",
                           transition: "all 0.3s ease",
                           border: "1px solid",

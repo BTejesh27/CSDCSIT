@@ -511,7 +511,7 @@ const ContactInfoSection = () => {
 
 const Home = () => {
   return (
-    <Box sx={{ background: '#f8fbff', minHeight: '100vh', pb: 6 }}>
+    <Box sx={{  minHeight: '100vh'}}>
       <Hero />
       <Container maxWidth="lg" sx={{ mt: 6 }}>
      
@@ -532,7 +532,6 @@ const Home = () => {
                   p: 4,
                   borderRadius: 4,
                   height: '100%',
-                  backgroundColor: '#ffffff',
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
                 }}
               >
@@ -562,7 +561,6 @@ const Home = () => {
                   p: 4,
                   borderRadius: 4,
                   height: '100%',
-                  backgroundColor: '#ffffff',
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
                 }}
               >
@@ -595,7 +593,6 @@ const Home = () => {
                   p: 4,
                   borderRadius: 4,
                   height: '100%',
-                  backgroundColor: '#ffffff',
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
                 }}
               >
@@ -639,7 +636,6 @@ const Home = () => {
                 sx={{
                   p: 4,
                   borderRadius: 4,
-                  backgroundColor: '#e3f2fd',
                   boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
                 }}
               >
