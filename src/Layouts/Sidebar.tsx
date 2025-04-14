@@ -7,6 +7,8 @@ import {
   ListItemIcon,
   ListItemText,
   Typography,
+  IconButton,
+  useTheme,
 } from '@mui/material';
 import {
   Home as HomeIcon,
@@ -16,8 +18,8 @@ import {
   Science as ScienceIcon,
   Domain as DomainIcon,
   School as SchoolIcon,
-  
 } from '@mui/icons-material';
+import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -25,6 +27,8 @@ const drawerWidth = 240;
 interface SidebarProps {
   mobileOpen: boolean;
   onClose: () => void;
+  darkMode: boolean;
+  toggleDarkMode: () => void;
 }
 
 const menuItems = [
@@ -37,15 +41,20 @@ const menuItems = [
   { text: 'Facilities', icon: <DomainIcon />, path: '/facilities' },
 ];
 
-const Sidebar = ({ mobileOpen, onClose }: SidebarProps) => {
+const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps) => {
   const location = useLocation();
+  const theme = useTheme(); // Access the current theme
 
   const drawer = (
     <Box sx={{ mt: 2 }}>
-      <Box sx={{ px: 2, mb: 3 }}>
+      <Box sx={{ px: 2, mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography variant="h2" color="primary" sx={{ fontWeight: 'bold' }}>
           CSD & CSIT
         </Typography>
+        {/* Theme Toggle Button */}
+        <IconButton onClick={toggleDarkMode} color="inherit">
+          {darkMode ? <Brightness7 /> : <Brightness4 />}
+        </IconButton>
       </Box>
       <List>
         {menuItems.map((item) => (
@@ -102,6 +111,7 @@ const Sidebar = ({ mobileOpen, onClose }: SidebarProps) => {
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
+            backgroundColor: theme.palette.background.paper, // Use theme background
           },
         }}
       >
@@ -115,6 +125,7 @@ const Sidebar = ({ mobileOpen, onClose }: SidebarProps) => {
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
+            backgroundColor: theme.palette.background.paper, // Use theme background
           },
         }}
         open

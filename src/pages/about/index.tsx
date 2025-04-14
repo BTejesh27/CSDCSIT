@@ -3,7 +3,8 @@ import aboutData from './api/Home';
 import SIHWin from '../../assests/images/SIHWin.jpg';
 import Prajwalan from '../../assests/images/prajwalan.jpg';
 import CodingChallenge from '../../assests/images/codingchallenge.jpg';
-import History from '../../assests/images/history.jpg'
+import History from '../../assests/images/history.jpg';
+import { theme } from '../../theme';
 
 const imageMap: any = {
   'prajwalan.jpg': Prajwalan,
@@ -14,7 +15,6 @@ const imageMap: any = {
 const sectionStyle = {
   p: 4,
   mb: 4,
-  background: 'linear-gradient(135deg, #fdfdfd 0%, #ffffff 100%)',
   borderLeft: '5px solid #1976d2',
   boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
   transition: 'box-shadow 0.3s ease',
@@ -24,40 +24,39 @@ const sectionStyle = {
 };
 
 const About = () => {
-  const theme = useTheme();
   const { title, vision, mission, history, hodMessage, achievements } = aboutData;
 
   return (
-    <Box sx={{ backgroundColor: '#fff', minHeight: '100vh' }}>
+    <Box sx={{ backgroundColor: theme.palette.background.default, minHeight: '100vh' }}>
       <Container maxWidth="lg">
         <Box sx={{ py: 4 }}>
           <Typography
             variant="h2"
             gutterBottom
             align="center"
-            sx={{ textDecoration: 'underline', fontWeight: 'bold', color: '#1976d2' }}
+            sx={{ textDecoration: 'underline', fontWeight: 'bold', color: theme.palette.primary.main }}
           >
             {title}
           </Typography>
 
           {/* Vision & Mission */}
           <Paper sx={sectionStyle}>
-            <Typography variant="h3" gutterBottom sx={{ color: '#1976d2', fontWeight: 'bold' }}>
+            <Typography variant="h3" gutterBottom sx={{ color: '#1976d2' }}>
               Vision & Mission
             </Typography>
             <Box sx={{ mb: 3 }}>
-              <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
+              <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: theme.palette.text.primary }}>
                 Vision
               </Typography>
-              <Typography sx={{ fontSize: '1.1rem', color: '#555' }}>
+              <Typography sx={{ fontSize: '1.1rem', color: theme.palette.text.secondary }}>
                 {vision}
               </Typography>
             </Box>
             <Box>
-              <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: '#333' }}>
+              <Typography variant="h4" gutterBottom sx={{ fontWeight: 'bold', color: theme.palette.text.primary }}>
                 Mission
               </Typography>
-              <Typography sx={{ fontSize: '1.1rem', color: '#555' }}>
+              <Typography sx={{ fontSize: '1.1rem', color: theme.palette.text.secondary }}>
                 {mission}
               </Typography>
             </Box>

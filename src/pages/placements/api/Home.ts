@@ -1,6 +1,7 @@
 import bhargavi from "./bhargavi.jpg";
 import someswarImage from "./someswar.jpg";
 import ganeshImage from "./ganesh.jpg";
+<<<<<<< HEAD
 import wadhwani from "./wadhwani.jpg";
 import purpleline from "./purplelane.jpg";
 import bluconn from "./bluconnInterns.jpg";
@@ -13,22 +14,34 @@ import cognizant from "./cognizant.png";
 import root from "./root.png"
 import viswa from "./viswa.png";
 import MNC from "./MNC.png"
+=======
+
+>>>>>>> origin/main
 export const testimonials = [
   {
     name: 'Bhargavi J',
     company: 'AKRIVIA',
+<<<<<<< HEAD
     message: 'our final year BTech CSD student Bhargavi J has been placed in Akrivia HCM as Software Development Engineer with 10-12 LPA ',
+=======
+    message: 'Cracked AKRIVIA SDE role after extensive placement training.',
+>>>>>>> origin/main
     image: bhargavi,
   },
   {
     name: 'Someswar',
     company: 'BOSON MOTORS',
+<<<<<<< HEAD
     message: 'S Someswar has been placed in Boson Motors as Robotics Intern (Android Deveoper) with 8 LPA post internship offer (20K/- during internship).',
+=======
+    message: 'Mock interviews and guidance helped me immensely.',
+>>>>>>> origin/main
     image: someswarImage,
   },
   {
     name: 'Ganesh',
     company: 'SMARTED',
+<<<<<<< HEAD
     message: 'Y Ganesh from 4/4 CSD, has secured a stellar placement at SmartED as a Business Growth Specialist with a package of 5 LPA!',
     image: ganeshImage,
   },
@@ -124,3 +137,39 @@ export const mouData = [
   },
  
 ];
+=======
+    message: 'Resume building sessions were a game-changer!',
+    image: ganeshImage,
+  },
+];
+
+export const recruiters = [
+  'Amazon',
+  'TCS',
+  'Infosys',
+  'Wipro',
+  'Cognizant',
+  'Tech Mahindra',
+];
+
+export const mouData = [
+  {
+    image: 'https://via.placeholder.com/300x200',
+    title: 'MOU with TCS iON',
+    description:
+      'This collaboration provides specialized training modules and assessment tools to enhance employability.',
+  },
+  {
+    image: 'https://via.placeholder.com/300x200',
+    title: 'MOU with Wipro TalentNext',
+    description:
+      'Enables students to work on industry-level case studies and earn certifications from Wipro.',
+  },
+  {
+    image: 'https://via.placeholder.com/300x200',
+    title: 'MOU with IBM SkillsBuild',
+    description:
+      'Offers access to IBM’s upskilling platforms including AI, Cloud, and Cybersecurity.',
+  },
+];
+>>>>>>> origin/main
