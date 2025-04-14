@@ -24,6 +24,10 @@ const sectionStyle = {
 };
 
 const About = () => {
+<<<<<<< Updated upstream
+=======
+  const theme = useTheme();
+>>>>>>> Stashed changes
   const { title, vision, mission, history, hodMessage, achievements } = aboutData;
 
   return (
@@ -41,7 +45,11 @@ const About = () => {
 
           {/* Vision & Mission */}
           <Paper sx={sectionStyle}>
+<<<<<<< Updated upstream
             <Typography variant="h3" gutterBottom sx={{ color: '#1976d2' }}>
+=======
+            <Typography variant="h3" gutterBottom sx={{ color: '#1976d2', fontWeight: 'bold' }}>
+>>>>>>> Stashed changes
               Vision & Mission
             </Typography>
             <Box sx={{ mb: 3 }}>
@@ -61,7 +69,7 @@ const About = () => {
               </Typography>
             </Box>
           </Paper>
-        
+
           {/* Department History */}
           <Box
             sx={{
@@ -70,6 +78,7 @@ const About = () => {
               flexDirection: { xs: 'column', md: 'row' },
               alignItems: 'center',
               gap: 4,
+              borderRight: '5px solid #1976d2',
             }}
           >
             <Box
@@ -86,7 +95,7 @@ const About = () => {
               <Typography variant="h3" gutterBottom sx={{ color: '#1976d2', fontWeight: 'bold' }}>
                 Department History
               </Typography>
-              <Typography sx={{ fontSize: '1.1rem', color: '#555' }}>
+              <Typography sx={{ fontSize: '1.1rem', color: theme.palette.text.secondary }}>
                 {history}
               </Typography>
             </Box>
@@ -99,20 +108,29 @@ const About = () => {
             <Typography variant="h3" gutterBottom sx={{ color: '#1976d2' }}>
               Message from HOD
             </Typography>
-            <Typography sx={{ fontSize: '1.1rem', color: '#555' }}>
+            <Typography sx={{ fontSize: '1.1rem', color: theme.palette.text.secondary }}>
               {hodMessage.message}
             </Typography>
-            <Typography variant="h6" sx={{ mt: 2, fontWeight: 'bold', color: '#333' }}>
+            <Typography variant="h6" sx={{ mt: 2, fontWeight: 'bold', color: theme.palette.text.secondary }}>
               {hodMessage.name}
             </Typography>
           </Paper>
 
           {/* Achievements */}
-          <Paper sx={{ ...sectionStyle, mb: 0 }}>
+          <Paper sx={{
+            p: 4,
+            mb: 4,
+            borderRight: '5px solid #1976d2',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.05)',
+            transition: 'box-shadow 0.3s ease',
+            '&:hover': {
+              boxShadow: '0 8px 28px rgba(0,0,0,0.1)',
+            },
+          }}>
             <Typography variant="h3" gutterBottom sx={{ color: '#1976d2' }}>
               CSD & CSIT Student Achievements
             </Typography>
-            <Typography sx={{ mb: 3, fontSize: '1.1rem', color: '#555' }}>
+            <Typography sx={{ mb: 3, fontSize: '1.1rem', color: theme.palette.text.secondary }}>
               A glimpse of our students' success stories in hackathons, expos, and innovation challenges.
             </Typography>
             <Grid container spacing={3}>
@@ -146,7 +164,8 @@ const About = () => {
             </Grid>
           </Paper>
         </Box>
-      </Container></Box>
+      </Container>
+    </Box>
   );
 };
 
