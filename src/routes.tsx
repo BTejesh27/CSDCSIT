@@ -6,6 +6,7 @@ import Academic from "./pages/academic";
 import Research from "./pages/research";
 import Facilities from "./pages/facilities";
 import Placements from "./pages/placements";
+import Gallery from "./pages/Gallery/gallery";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
       <Route path="/research" element={<Research />} />
       <Route path="/faculty" element={<Faculty />} />
       <Route path="/academic" element={<Academic />} />
+      <Route path="/gallery" element={<Gallery />} />
       <Route path="/facilities" element={<Facilities />} />
     </Routes>
   );
