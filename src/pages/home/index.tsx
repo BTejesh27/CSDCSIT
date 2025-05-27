@@ -29,12 +29,10 @@ import { useEffect, useState } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
 // Import images
-import prajwalan from '../../assests/images/s.jpeg';
-import codingchallenge from '../../assests/images/tt.jpg';
-import SIHWin from '../../assests/images/SIHWin.jpg';
 import bhargaviImage from '../../assests/images/bhargavi.jpg';
 
-const images = [prajwalan, codingchallenge, SIHWin];
+// Import video
+import videoSrc from '../../assests/video.mp4';
 
 // Updated Contact Info
 const updatedContactInfo = {
@@ -123,47 +121,56 @@ const quickLinks = [
   { name: "Research Publications", url: "https://example.com/research-publications", internal: false },
   ];
 const Hero = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <Box
       sx={{
         position: 'relative',
         height: { xs: '60vh', md: '75vh' },
-        backgroundImage: `url(${images[currentImageIndex]})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
         display: 'flex',
-        objectFit: 'contain',
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
         textAlign: 'center',
-        transition: 'background-image 1s ease-in-out',
+        backgroundColor: '#000', // fallback background
       }}
     >
+      {/* Video only, no image background */}
+      <Box
+        sx={{
+          position: 'absolute',
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+          overflow: 'hidden',
+        }}
+      >
+        <video
+          src={videoSrc}
+          autoPlay
+          loop
+          muted
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            opacity: 0.7,
+          }}
+        />
+      </Box>
       <Box
         sx={{
           position: 'absolute',
           width: '100%',
           height: '100%',
           backgroundColor: 'rgba(0,0,0,0.35)',
+          zIndex: 1,
         }}
       />
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        style={{ zIndex: 1 }}
+        style={{ zIndex: 2 }}
       >
         <Typography variant="h3" fontWeight="bold">
           Welcome to CSD & CSIT
