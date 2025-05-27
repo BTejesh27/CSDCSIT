@@ -99,8 +99,6 @@ const startupSection = {
 function App() {
   const [activeSection, setActiveSection] = useState("");
   const sectionRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
-  const [showProjects, setShowProjects] = useState(false);
-  const [showStartups, setShowStartups] = useState(false);
 
   const theme = createTheme({
     palette: {
@@ -123,7 +121,6 @@ function App() {
   });
 
   const muiTheme = useTheme();
-  const isMobile = useMediaQuery(muiTheme.breakpoints.down("md"));
 
   useEffect(() => {
     const handleScroll = () => {
@@ -154,7 +151,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box sx={{     bgcolor: muiTheme.palette.mode === "dark" ? "#000000" : "#ffffff", minHeight: "100vh" }}>
+      <Box sx={{ bgcolor: muiTheme.palette.mode === "dark" ? "#000000" : "#ffffff", minHeight: "100vh" }}>
         <Container sx={{ py: 8 }}>
           {/* Projects Section */}
           <Box ref={(el) => (sectionRefs.current[projectSection.id] = el)} mb={6}>
@@ -163,7 +160,7 @@ function App() {
               fontWeight="bold"
               gutterBottom
               sx={{
-                color: muiTheme.palette.text.primary, // Dynamic text color
+                color: muiTheme.palette.text.primary,
               }}
             >
               {projectSection.title}
@@ -173,104 +170,60 @@ function App() {
               color="textSecondary"
               mb={4}
               sx={{
-                color: muiTheme.palette.text.secondary, // Dynamic text color
+                color: muiTheme.palette.text.secondary,
               }}
             >
               {projectSection.description}
             </Typography>
-            <Box
-              sx={{
-                position: "relative",
-                width: "100%",
-                height: 400,
-                mb: 4,
-                borderRadius: 2,
-                overflow: "hidden",
-              }}
-            >
-              <Box
-                component="img"
-                src={projectSection.image}
-                alt={projectSection.title}
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-              <Button
-                variant="outlined"
-                onClick={() => setShowProjects((prev) => !prev)}
-                endIcon={<ChevronDown />}
-                sx={{
-                  position: "absolute",
-                  bottom: 16,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  px: 4,
-                  py: 1,
-                  fontWeight: "bold",
-                  backgroundColor: muiTheme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.8)" : "rgba(255, 255, 255, 0.8)", // Adjust button background
-                  color: muiTheme.palette.text.primary,
-                }}
-              >
-                {showProjects ? "Hide Projects" : "View Projects"}
-              </Button>
-            </Box>
-
-            {/* Render projects directly below */}
-            {showProjects && (
-              <Box mt={6} p={2}>
-                <Grid container spacing={4}>
-                  {projectList.map((project, index) => (
-                    <Grid item xs={12} sm={6} md={4} key={index}>
-                      <Paper
-                        elevation={4}
-                        sx={{
-                          p: 2,
-                          borderRadius: 2,
-                          bgcolor: muiTheme.palette.background.paper, // Dynamic paper background
-                        }}
-                      >
-                        <Box
-                          component="img"
-                          src={project.image}
-                          alt={project.title}
-                          sx={{
-                            width: "100%",
-                            height: 180,
-                            objectFit: "contain",
-                            borderRadius: 2,
-                            mb: 2,
-                          }}
-                        />
-                        <Typography
-                          variant="h6"
-                          sx={{
-                            color: muiTheme.palette.text.primary, // Dynamic text color
-                          }}
-                        >
-                          {project.title}
-                        </Typography>
-                        <Button
-                          href={project.link}
-                          target="_blank"
-                          variant="contained"
-                          fullWidth
-                          sx={{
-                            mt: 1,
-                            bgcolor: muiTheme.palette.primary.main,
-                            color: muiTheme.palette.primary.contrastText,
-                          }}
-                        >
-                          Visit Project
-                        </Button>
-                      </Paper>
-                    </Grid>
-                  ))}
+            {/* Gallery for Projects */}
+            <Grid container spacing={4}>
+              {projectList.map((project, index) => (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  <Paper
+                    elevation={4}
+                    sx={{
+                      p: 2,
+                      borderRadius: 2,
+                      bgcolor: muiTheme.palette.background.paper,
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={project.image}
+                      alt={project.title}
+                      sx={{
+                        width: "100%",
+                        height: 180,
+                        objectFit: "contain",
+                        borderRadius: 2,
+                        mb: 2,
+                      }}
+                    />
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: muiTheme.palette.text.primary,
+                      }}
+                    >
+                      {project.title}
+                    </Typography>
+                    <Button
+                      href={project.link}
+                      target="_blank"
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        mt: 1,
+                        bgcolor: muiTheme.palette.primary.main,
+                        color: muiTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Visit Project
+                    </Button>
+                  </Paper>
                 </Grid>
-              </Box>
-            )}
+              ))}
+            </Grid>
           </Box>
 
           {/* Startups Section */}
@@ -280,7 +233,7 @@ function App() {
               fontWeight="bold"
               gutterBottom
               sx={{
-                color: muiTheme.palette.text.primary, // Dynamic text color
+                color: muiTheme.palette.text.primary,
               }}
             >
               {startupSection.title}
@@ -290,120 +243,75 @@ function App() {
               color="textSecondary"
               mb={4}
               sx={{
-                color: muiTheme.palette.text.secondary, // Dynamic text color
+                color: muiTheme.palette.text.secondary,
               }}
             >
               {startupSection.description}
             </Typography>
-            {/* Display the image */}
-            <Box
-              sx={{
-                position: "relative",
-                width: "100%",
-                height: 300,
-                mb: 4,
-                borderRadius: 2,
-                overflow: "hidden",
-              }}
-            >
-              <Box
-                component="img"
-                src={startupSection.image}
-                alt={startupSection.title}
-                sx={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-              <Button
-                variant="outlined"
-                onClick={() => setShowStartups((prev) => !prev)}
-                endIcon={<ChevronDown />}
-                sx={{
-                  position: "absolute",
-                  bottom: 16,
-                  left: "50%",
-                  transform: "translateX(-50%)",
-                  px: 4,
-                  py: 1,
-                  fontWeight: "bold",
-                  backgroundColor: muiTheme.palette.mode === "dark" ? "rgba(0, 0, 0, 0.8)" : "rgba(255, 255, 255, 0.8)", // Adjust button background
-                  color: muiTheme.palette.text.primary,
-                }}
-              >
-                {showStartups ? "Hide Startups" : "View Startups"}
-              </Button>
-            </Box>
+            {/* Gallery for Startups */}
+            <Grid container spacing={4}>
+              {startups.map((startup, index) => (
+                <Grid item xs={12} sm={6} md={4} key={index}>
+                  <Paper
+                    elevation={4}
+                    sx={{
+                      p: 2,
+                      borderRadius: 2,
+                      bgcolor: muiTheme.palette.background.paper,
+                    }}
+                  >
+                    <Box
+                      component="img"
+                      src={startup.image}
+                      alt={startup.title}
+                      sx={{
+                        width: "100%",
+                        height: 180,
+                        objectFit: "contain",
+                        borderRadius: 2,
+                        mb: 2,
+                      }}
+                    />
+                    <Typography
+                      variant="h6"
+                      sx={{
+                        color: muiTheme.palette.text.primary,
+                      }}
+                    >
+                      {startup.title}
+                    </Typography>
+                    <Typography
+                      variant="body2"
+                      color="textSecondary"
+                      mb={2}
+                      sx={{
+                        color: muiTheme.palette.text.secondary,
+                      }}
+                    >
+                      {startup.description}
+                    </Typography>
+                    <Button
+                      href={startup.link}
+                      target="_blank"
+                      variant="contained"
+                      fullWidth
+                      sx={{
+                        mt: 1,
+                        bgcolor: muiTheme.palette.primary.main,
+                        color: muiTheme.palette.primary.contrastText,
+                      }}
+                    >
+                      Visit Startup
+                    </Button>
+                  </Paper>
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
+        </Container>
+      </Box>
+    </ThemeProvider>
+  );
+}
 
-            {/* Render startups directly below */}
-            {showStartups && (
-              <Box mt={6} p={2}>
-                <Grid container spacing={4}>
-                  {startups.map((startup, index) => (
-                    <Grid item xs={12} sm={6} md={4} key={index}>
-                      <Paper
-                        elevation={4}
-                        sx={{
-                          p: 2,
-                          borderRadius: 2,
-                          bgcolor: muiTheme.palette.background.paper, // Dynamic paper background
-                        }}
-                      >
-                        <Box
-                          component="img"
-                          src={startup.image}
-                          alt={startup.title}
-                          sx={{
-                            width: "100%",
-                            height: 180,
-                            objectFit: "contain",
-                            borderRadius: 2,
-                            mb: 2,
-                          }}
-                        />
-                          <Typography
-                            variant="h6"
-                            sx={{
-                              color: muiTheme.palette.text.primary, // Dynamic text color
-                            }}
-                          >
-                            {startup.title}
-                          </Typography>
-                          <Typography
-                            variant="body2"
-                            color="textSecondary"
-                            mb={2}
-                            sx={{
-                              color: muiTheme.palette.text.secondary, // Dynamic text color
-                            }}
-                          >
-                            {startup.description}
-                          </Typography>
-                          <Button
-                            href={startup.link}
-                            target="_blank"
-                            variant="contained"
-                            fullWidth
-                            sx={{
-                              mt: 1,
-                              bgcolor: muiTheme.palette.primary.main,
-                              color: muiTheme.palette.primary.contrastText,
-                            }}
-                          >
-                            Visit Startup
-                          </Button>
-                        </Paper>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </Box>
-              )}
-            </Box>
-          </Container>
-        </Box>
-      </ThemeProvider>
-    );
-  }
-
-  export default App;
+export default App;
