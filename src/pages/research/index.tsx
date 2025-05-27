@@ -4,16 +4,12 @@ import {
   Typography, 
   Button, 
   Grid,
-  Card,
-  CardMedia,
-  CardContent,
-  CardActions,
   Collapse,
-  useTheme
+  useTheme,
+  Paper
 } from '@mui/material';
 import { ChevronDown, ChevronUp, ExternalLink } from 'lucide-react';
 import { motion } from 'framer-motion';
-import SectionHeader from '../../components/SectionHeader';
 import magicaldbImage from "./images/magicaldb.png";
 import boImage from "./images/bo.png";
 import srkrImage from "./images/srkr.png";
@@ -23,7 +19,7 @@ import spellImage from "./images/spell.png";
 import coImage from "./images/co.png";
 import bonlineImage from "./images/bonline.png";
 import bdImage from "./images/bd.png";
-import yuppiesBanner from "c:/Users/Megana Arnepalli/Downloads/Yuppies Collage General LinkdIn Banner.jpg";
+import startupsImage from "./images/startups.jpg";
 
 // Replace the image below with your professional image URL or import
 const professionalProjectImage = "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?auto=format&fit=crop&w=1200&q=80"; // Example Unsplash image
@@ -97,7 +93,7 @@ export const sectionData = {
   startups: {
     title: "Startups",
     description: "Entrepreneurial ventures transforming ideas into reality.",
-    image: yuppiesBanner
+    image: startupsImage
   }
 };
 
@@ -112,10 +108,22 @@ const ProjectsSection = () => {
   return (
     <Box component="section" mb={10}>
       {/* Projects */}
-      <SectionHeader 
-        title={sectionData.projects.title}
-        description={sectionData.projects.description}
-      />
+      <Box mb={2}>
+        <Typography 
+          variant="h4" 
+          fontWeight={600} 
+          color={theme.palette.primary.main}
+          gutterBottom
+        >
+          {sectionData.projects.title}
+        </Typography>
+        <Typography 
+          variant="subtitle1" 
+          color={theme.palette.text.secondary}
+        >
+          {sectionData.projects.description}
+        </Typography>
+      </Box>
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -189,55 +197,63 @@ const ProjectsSection = () => {
       </motion.div>
 
       <Collapse in={showProjects} timeout={700}>
-        <Box mt={4}>
-          <Grid container spacing={3}>
+        <Box mt={6} p={2}>
+          <Grid container spacing={4}>
             {projectList.map((project, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.12, type: "spring" }}
-                  whileHover={{ scale: 1.03, boxShadow: "0 12px 24px rgba(0,0,0,0.15)" }}
+                <Paper
+                  elevation={4}
+                  sx={{
+                    p: 2,
+                    borderRadius: 2,
+                    bgcolor: theme.palette.background.paper,
+                  }}
                 >
-                  <Card 
-                    sx={{ 
-                      height: '100%', 
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                  <Box
+                    component="img"
+                    src={project.image}
+                    alt={project.title}
+                    sx={{
+                      width: "100%",
+                      height: 180,
+                      objectFit: "contain",
+                      borderRadius: 2,
+                      mb: 2,
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: theme.palette.text.primary,
                     }}
                   >
-                    <CardMedia
-                      component="img"
-                      height="160"
-                      image={project.image}
-                      alt={project.title}
-                      sx={{ objectFit: 'cover' }}
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography variant="h6" component="h3" gutterBottom>
-                        {project.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {project.description}
-                      </Typography>
-                    </CardContent>
-                    <CardActions sx={{ p: 2, pt: 0 }}>
-                      <motion.div whileTap={{ scale: 0.97 }}>
-                        <Button 
-                          variant="contained" 
-                          fullWidth
-                          href={project.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          endIcon={<ExternalLink size={16} />}
-                        >
-                          Visit Project
-                        </Button>
-                      </motion.div>
-                    </CardActions>
-                  </Card>
-                </motion.div>
+                    {project.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    mb={2}
+                    sx={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {project.description}
+                  </Typography>
+                  <Button
+                    href={project.link}
+                    target="_blank"
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      mt: 1,
+                      bgcolor: theme.palette.primary.main,
+                      color: theme.palette.primary.contrastText,
+                    }}
+                    endIcon={<ExternalLink size={16} />}
+                  >
+                    Visit Project
+                  </Button>
+                </Paper>
               </Grid>
             ))}
           </Grid>
@@ -245,10 +261,22 @@ const ProjectsSection = () => {
       </Collapse>
 
       {/* Startups */}
-      <SectionHeader 
-        title={sectionData.startups.title}
-        description={sectionData.startups.description}
-      />
+      <Box mt={8} mb={2}>
+        <Typography 
+          variant="h4" 
+          fontWeight={600} 
+          color={theme.palette.primary.main}
+          gutterBottom
+        >
+          {sectionData.startups.title}
+        </Typography>
+        <Typography 
+          variant="subtitle1" 
+          color={theme.palette.text.secondary}
+        >
+          {sectionData.startups.description}
+        </Typography>
+      </Box>
       <motion.div
         initial={{ opacity: 0, y: 40, scale: 0.95 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -322,55 +350,63 @@ const ProjectsSection = () => {
       </motion.div>
 
       <Collapse in={showStartups} timeout={700}>
-        <Box mt={4}>
-          <Grid container spacing={3}>
+        <Box mt={6} p={2}>
+          <Grid container spacing={4}>
             {startupList.map((startup, index) => (
               <Grid item xs={12} sm={6} md={4} key={index}>
-                <motion.div
-                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.12, type: "spring" }}
-                  whileHover={{ scale: 1.03, boxShadow: "0 12px 24px rgba(0,0,0,0.15)" }}
+                <Paper
+                  elevation={4}
+                  sx={{
+                    p: 2,
+                    borderRadius: 2,
+                    bgcolor: theme.palette.background.paper,
+                  }}
                 >
-                  <Card 
-                    sx={{ 
-                      height: '100%', 
-                      display: 'flex', 
-                      flexDirection: 'column',
-                      transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                  <Box
+                    component="img"
+                    src={startup.image}
+                    alt={startup.title}
+                    sx={{
+                      width: "100%",
+                      height: 180,
+                      objectFit: "contain",
+                      borderRadius: 2,
+                      mb: 2,
+                    }}
+                  />
+                  <Typography
+                    variant="h6"
+                    sx={{
+                      color: theme.palette.text.primary,
                     }}
                   >
-                    <CardMedia
-                      component="img"
-                      height="160"
-                      image={startup.image}
-                      alt={startup.title}
-                      sx={{ objectFit: 'cover' }}
-                    />
-                    <CardContent sx={{ flexGrow: 1 }}>
-                      <Typography variant="h6" component="h3" gutterBottom>
-                        {startup.title}
-                      </Typography>
-                      <Typography variant="body2" color="text.secondary">
-                        {startup.description}
-                      </Typography>
-                    </CardContent>
-                    <CardActions sx={{ p: 2, pt: 0 }}>
-                      <motion.div whileTap={{ scale: 0.97 }}>
-                        <Button 
-                          variant="contained" 
-                          fullWidth
-                          href={startup.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          endIcon={<ExternalLink size={16} />}
-                        >
-                          Visit Startup
-                        </Button>
-                      </motion.div>
-                    </CardActions>
-                  </Card>
-                </motion.div>
+                    {startup.title}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    mb={2}
+                    sx={{
+                      color: theme.palette.text.secondary,
+                    }}
+                  >
+                    {startup.description}
+                  </Typography>
+                  <Button
+                    href={startup.link}
+                    target="_blank"
+                    variant="contained"
+                    fullWidth
+                    sx={{
+                      mt: 1,
+                      bgcolor: theme.palette.primary.main,
+                      color: theme.palette.primary.contrastText,
+                    }}
+                    endIcon={<ExternalLink size={16} />}
+                  >
+                    Visit Startup
+                  </Button>
+                </Paper>
               </Grid>
             ))}
           </Grid>
