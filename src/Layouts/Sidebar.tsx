@@ -21,6 +21,7 @@ import {
 } from '@mui/icons-material';
 import { Brightness4, Brightness7 } from '@mui/icons-material';
 import { Link, useLocation } from 'react-router-dom';
+import historyImage from '../assests/images/csdlogo.jpeg';
 
 const drawerWidth = 240;
 
@@ -43,55 +44,71 @@ const menuItems = [
 
 const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps) => {
   const location = useLocation();
-  const theme = useTheme(); // Access the current theme
+  const theme = useTheme();
 
   const drawer = (
-    <Box sx={{ mt: 2 }}>
+    <Box
+      sx={{
+        mt: 2,
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        overflow: 'hidden',
+      }}
+    >
       <Box sx={{ px: 2, mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Typography variant="h2" color="primary" sx={{ fontWeight: 'bold' }}>
+        <Typography variant="h3" color="primary" sx={{ fontWeight: 'bold' }}>
           CSD & CSIT
         </Typography>
-        {/* Theme Toggle Button */}
         <IconButton onClick={toggleDarkMode} color="inherit">
           {darkMode ? <Brightness7 /> : <Brightness4 />}
         </IconButton>
       </Box>
-      <List>
-        {menuItems.map((item) => (
-          <ListItem key={item.text} disablePadding>
-            <ListItemButton
-              component={Link}
-              to={item.path}
-              selected={location.pathname === item.path}
-              sx={{
-                '&.Mui-selected': {
-                  backgroundColor: 'primary.light',
-                  '&:hover': {
-                    backgroundColor: 'primary.light',
-                  },
-                  '& .MuiListItemIcon-root': {
-                    color: 'primary.main',
-                  },
-                  '& .MuiListItemText-primary': {
-                    color: 'primary.main',
-                    fontWeight: 600,
-                  },
-                },
-              }}
-            >
-              <ListItemIcon
+      <Box sx={{ flexGrow: 1, minHeight: 0, overflowY: 'auto' }}>
+        <List>
+          {menuItems.map((item) => (
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton
+                component={Link}
+                to={item.path}
+                selected={location.pathname === item.path}
                 sx={{
-                  minWidth: 40,
-                  color: 'grey.700',
+                  '&.Mui-selected': {
+                    backgroundColor: 'primary.light',
+                    '&:hover': {
+                      backgroundColor: 'primary.light',
+                    },
+                    '& .MuiListItemIcon-root': {
+                      color: 'primary.main',
+                    },
+                    '& .MuiListItemText-primary': {
+                      color: 'primary.main',
+                      fontWeight: 600,
+                    },
+                  },
                 }}
               >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
+                <ListItemIcon
+                  sx={{
+                    minWidth: 40,
+                    color: 'grey.700',
+                  }}
+                >
+                  {item.icon}
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
+      </Box>
+      <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+        <img
+          src={historyImage}
+          alt="Logo"
+          style={{ width: '80%', maxWidth: 120, borderRadius: 8 }}
+        />
+      </Box>
     </Box>
   );
 
@@ -100,7 +117,6 @@ const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps
       component="nav"
       sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
     >
-      {/* Mobile drawer */}
       <Drawer
         variant="temporary"
         open={mobileOpen}
@@ -111,13 +127,12 @@ const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
-            backgroundColor: theme.palette.background.paper, // Use theme background
+            backgroundColor: theme.palette.background.paper,
           },
         }}
       >
         {drawer}
       </Drawer>
-      {/* Desktop drawer */}
       <Drawer
         variant="permanent"
         sx={{
@@ -125,7 +140,7 @@ const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps
           '& .MuiDrawer-paper': {
             boxSizing: 'border-box',
             width: drawerWidth,
-            backgroundColor: theme.palette.background.paper, // Use theme background
+            backgroundColor: theme.palette.background.paper, 
           },
         }}
         open
