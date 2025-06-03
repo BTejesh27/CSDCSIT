@@ -11,7 +11,6 @@ import {
   Divider,
   Modal,
   IconButton,
-  Button,
   Link,
 } from '@mui/material';
 import {
@@ -19,41 +18,90 @@ import {
   Email,
   Phone,
   LocationOn,
-  Visibility,
-  Flag,
-  Close,
   WhatsApp,
+  Close,
+  ArrowBackIos,
+  ArrowForwardIos,
 } from '@mui/icons-material';
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-// Import images
+// Import images with proper error handling
 import prajwalan from '../../assests/images/s.jpeg';
 import codingchallenge from '../../assests/images/tt.jpg';
 import SIHWin from '../../assests/images/SIHWin.jpg';
 import bhargaviImage from '../../assests/images/bhargavi.jpg';
+import Project_expo1 from '../../assests/images/Project_expo1.jpg';
+import Project_expo2 from '../../assests/images/Project_expo2.jpg';
+import Project_expo3 from '../../assests/images/Project_expo3.jpg';
+import placement1 from '../../assests/images/placement1.jpg';
 
-const images = [prajwalan, codingchallenge, SIHWin];
+// Memoized hero images array to prevent unnecessary re-renders
+const heroImages = [prajwalan, codingchallenge, SIHWin];
 
-// Updated Contact Info
-const updatedContactInfo = {
+// Constants for better maintainability
+const HERO_SLIDE_INTERVAL = 4000; // 4 seconds
+const IMAGE_SLIDER_INTERVAL = 3000; // 3 seconds
+
+// Updated Contact Info with proper typing
+interface ContactInfo {
+  address: string;
+  email: string;
+  phone: string;
+  whatsapp: string;
+  mapUrl: string;
+}
+
+const updatedContactInfo: ContactInfo = {
   address: "SRKR Engineering College Chinnamiram, Bhimavaram, Andhra Pradesh 534204, India",
-  email: "vishnutej2004@gmail.com",
-  phone: "9989948717",
-  whatsapp: "9989948717",
+  email: "suresh.mudunuri@srkrec.edu.in",
+  phone: "+919866600002",
+  whatsapp: "+919866600002",
   mapUrl: "https://www.google.com/maps/search/?api=1&query=SRKR%20Engineering%20College%20Chinnamiram%2C%20Bhimavaram%2C%20Chinamiram%20Rural%2C%20Andhra%20Pradesh%20534204%2C%20India",
 };
 
-// News data with imported images
-const newsItems = [
+// Enhanced interfaces for better type safety
+interface NewsItem {
+  id?: string;
+  date: string;
+  title: string;
+  description: string;
+  image: string;
+  fullContent: string;
+}
+
+interface EventItem {
+  month: string;
+  day: string;
+  title: string;
+  description: string;
+  image: string;
+  images?: string[];
+  fullContent: string;
+}
+
+interface QuickLink {
+  name: string;
+  url: string;
+  internal: boolean;
+}
+
+// News data with proper typing and validation
+const newsItems: NewsItem[] = [
   {
     id: "#1",
-    date: "23-February-2025",
-    title: "Financial Progress with Projections at National Level Technical Symposium IINA-25",
-    description: "The National Level Technical Symposium IINA-25 concluded successfully on Saturday with outstanding financial projections and remarkable participation from colleges across the nation.",
-    image: bhargaviImage,
-    fullContent: "The National Level Technical Symposium IINA-25 concluded successfully on Saturday with outstanding financial projections and remarkable participation from colleges across the nation. The event featured technical presentations, coding competitions, and innovative project demonstrations. Over 500 students from 30 different colleges participated in various events, making it one of the largest technical symposiums in the region. The Department of Computer Science & Information Technology played a key role in organizing the event, ensuring smooth execution of all technical activities. Distinguished guests from industry and academia praised the quality of projects presented and the organizational capabilities of the SRKR Engineering College team. The event also served as a platform for industry-academia interaction, with several companies expressing interest in the innovative projects displayed by the students.",
+    date: "6-May-2025",
+    title: "Big Congratulations to Our Atelia Health Selections!",
+    description: "We are thrilled to celebrate the success of our talented students from 4/4 CSD, SRKR Engineering College, who have been selected as Full Stack Developers at Atelia Software India Pvt Ltd with a 4 LPA package and ₹15,000 monthly stipend.",
+    image: placement1,
+    fullContent: `We are thrilled to celebrate the success of our talented students from 4/4 CSD, SRKR Engineering College, who have been selected as Full Stack Developers at Atelia Software India Pvt Ltd with a 4 LPA package and ₹15,000 monthly stipend:
+
+Reddi Sahithi (21B91A6244)
+Byri Rohit (21B91A6205)
+Revathi Pathiwada (21B91A6238)
+
+Your dedication, skills, and consistent efforts have earned you this remarkable opportunity. We are proud of your achievement and wish you continued success in your tech careers!`,
   },
   {
     date: "27-January-2025",
@@ -78,8 +126,17 @@ const newsItems = [
   }
 ];
 
-// Events data with imported images
-const eventItems = [
+// Events data with enhanced validation
+const eventItems: EventItem[] = [
+  {
+    month: "May",
+    day: "04",
+    title: "Project Expo 2025",
+    description: "The Department of Computer Science & Information Technology at SRKR Engineering College is excited to announce the annual Project Expo 2025, a platform for students to showcase their innovative projects and research work.",
+    images: [Project_expo1, Project_expo2, Project_expo3], // Multiple images for slider
+    image: Project_expo1, // Fallback for non-slider display
+    fullContent: "The Department of Computer Science & Information Technology at SRKR Engineering College is excited to announce the annual Project Expo 2025, a platform for students to showcase their innovative projects and research work. This comprehensive exhibition will feature final year projects from all engineering departments, with special focus on cutting-edge technologies like AI, Machine Learning, IoT, and Blockchain. Industry experts will evaluate the projects and provide valuable feedback to students. The expo also includes workshops on emerging technologies, career guidance sessions, and networking opportunities with industry professionals. Students will have the chance to present their innovative solutions to real-world problems and compete for attractive prizes and recognition."
+  },
   {
     month: "JANUARY",
     day: "23",
@@ -114,36 +171,53 @@ const eventItems = [
   }
 ];
 
-const quickLinks = [
+// Quick links with proper typing
+const quickLinks: QuickLink[] = [
   { name: "Attendance", url: "http://43.250.40.63/Login.aspx?ReturnUrl=%2fStudentLogin%2f", internal: false },
   { name: "CSD Net", url: "http://www.mcr.org.in/csdnet/add_leave.php", internal: false },
   { name: "SRKR web portal", url: "https://srkrexams.in/", internal: false },
   { name: "Academic Calendar", url: "/academic", internal: true },
   { name: "Faculty Resources", url: "/faculty", internal: true },
   { name: "Research Publications", url: "https://example.com/research-publications", internal: false },
-  ];
+];
+
+// Enhanced Hero component with error handling
 const Hero = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [imageLoadError, setImageLoadError] = useState(false);
+
+  // Memoized background image URL with error handling
+  const backgroundImageUrl = useMemo(() => {
+    try {
+      return `url(${heroImages[currentImageIndex]})`;
+    } catch (error) {
+      console.error('Error loading hero image:', error);
+      setImageLoadError(true);
+      return 'url(https://via.placeholder.com/1920x1080?text=Loading...)';
+    }
+  }, [currentImageIndex]);
 
   useEffect(() => {
+    // Prevent interval if there's an image error
+    if (imageLoadError || heroImages.length === 0) return;
+
     const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 4000);
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % heroImages.length);
+    }, HERO_SLIDE_INTERVAL);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [imageLoadError]);
 
   return (
     <Box
       sx={{
         position: 'relative',
         height: { xs: '60vh', md: '75vh' },
-        backgroundImage: `url(${images[currentImageIndex]})`,
+        backgroundImage: backgroundImageUrl,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundRepeat: 'no-repeat',
         display: 'flex',
-        objectFit: 'contain',
         alignItems: 'center',
         justifyContent: 'center',
         color: '#fff',
@@ -176,50 +250,302 @@ const Hero = () => {
   );
 };
 
-// Location Map Component
+// Enhanced Location Map Component with error handling
 const LocationMap = () => {
+  const [mapError, setMapError] = useState(false);
+
+  const handleMapError = useCallback(() => {
+    setMapError(true);
+    console.error('Error loading Google Maps iframe');
+  }, []);
+
   return (
     <Box sx={{ mt: 2 }}>
       <Typography variant="h6" fontWeight="bold" gutterBottom>
         Find Us
       </Typography>
-      <Box
-        component="iframe"
-        src="https://www.google.com/maps/embed?pb=!1m0!3m2!1sen!2sin!4v1450773916697!6m8!1m7!1sVRZD66Mn6_kAAAQvOZt-dg!2m2!1d16.54317458557342!2d81.4963815169823!3f7.378257193743614!4f6.129360768543123!5f0.7820865974627469"
-        sx={{
-          width: '100%',
-          height: { xs: '500px', sm: '700px', md: '350px' },
-          borderRadius: 2,
-          border: 1,
-        }}
-        allowFullScreen
-        loading="lazy"
-      />
+      {mapError ? (
+        <Box
+          sx={{
+            width: '100%',
+            height: { xs: '500px', sm: '700px', md: '350px' },
+            borderRadius: 2,
+            border: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'grey.100',
+          }}
+        >
+          <Typography color="text.secondary">
+            Map temporarily unavailable. Please visit our location directly.
+          </Typography>
+        </Box>
+      ) : (
+        <Box
+          component="iframe"
+          src="https://www.google.com/maps/embed?pb=!1m0!3m2!1sen!2sin!4v1450773916697!6m8!1m7!1sVRZD66Mn6_kAAAQvOZt-dg!2m2!1d16.54317458557342!2d81.4963815169823!3f7.378257193743614!4f6.129360768543123!5f0.7820865974627469"
+          sx={{
+            width: '100%',
+            height: { xs: '500px', sm: '700px', md: '350px' },
+            borderRadius: 2,
+            border: 1,
+          }}
+          allowFullScreen
+          loading="lazy"
+          onError={handleMapError}
+        />
+      )}
     </Box>
   );
 };
 
-// News Item Component with Popup functionality
+// Enhanced Image Slider Component with better error handling
+interface ImageSliderProps {
+  images: string[];
+  alt: string;
+}
+
+const ImageSlider = ({ images, alt }: ImageSliderProps) => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [imageErrors, setImageErrors] = useState<Set<number>>(new Set());
+
+  // Validate images array
+  const validImages = useMemo(() => {
+    return images.filter(img => img && typeof img === 'string');
+  }, [images]);
+
+  // Handle image load errors
+  const handleImageError = useCallback((index: number) => {
+    setImageErrors(prev => new Set(prev).add(index));
+    console.error(`Error loading image at index ${index}:`, validImages[index]);
+  }, [validImages]);
+
+  // Auto-play functionality with error handling
+  useEffect(() => {
+    if (validImages.length <= 1) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % validImages.length);
+    }, IMAGE_SLIDER_INTERVAL);
+
+    return () => clearInterval(interval);
+  }, [validImages.length]);
+
+  // Navigation functions with bounds checking
+  const goToPrevious = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + validImages.length) % validImages.length);
+  }, [validImages.length]);
+
+  const goToNext = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % validImages.length);
+  }, [validImages.length]);
+
+  // Handle invalid images
+  if (!validImages.length) {
+    return (
+      <Box sx={{ 
+        width: '100%', 
+        height: 200, 
+        display: 'flex', 
+        alignItems: 'center', 
+        justifyContent: 'center',
+        backgroundColor: 'grey.100',
+        borderRadius: 2
+      }}>
+        <Typography color="text.secondary">No images available</Typography>
+      </Box>
+    );
+  }
+
+  // Single image display
+  if (validImages.length === 1) {
+    return (
+      <Box
+        component="img"
+        src={validImages[0]}
+        alt={alt}
+        sx={{
+          width: '100%',
+          height: 'auto',
+          borderRadius: 2,
+          objectFit: 'cover',
+        }}
+        onError={() => handleImageError(0)}
+      />
+    );
+  }
+
+  return (
+    <Box sx={{ position: 'relative', width: '100%', height: 'auto' }}>
+      {/* Main slider container */}
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: 'auto',
+          borderRadius: 2,
+          overflow: 'hidden',
+        }}
+      >
+        {/* Current image display with error handling */}
+        {imageErrors.has(currentSlide) ? (
+          <Box
+            sx={{
+              width: '100%',
+              height: 200,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'grey.100',
+            }}
+          >
+            <Typography color="text.secondary">Image unavailable</Typography>
+          </Box>
+        ) : (
+          <Box
+            component="img"
+            src={validImages[currentSlide]}
+            alt={`${alt} - Image ${currentSlide + 1}`}
+            sx={{
+              width: '100%',
+              height: 'auto',
+              objectFit: 'cover',
+              transition: 'opacity 0.5s ease-in-out',
+            }}
+            onError={() => handleImageError(currentSlide)}
+          />
+        )}
+
+        {/* Navigation arrows */}
+        <IconButton
+          onClick={goToPrevious}
+          aria-label="Previous image"
+          sx={{
+            position: 'absolute',
+            left: 8,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            },
+            zIndex: 2,
+          }}
+        >
+          <ArrowBackIos />
+        </IconButton>
+
+        <IconButton
+          onClick={goToNext}
+          aria-label="Next image"
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: '50%',
+            transform: 'translateY(-50%)',
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+            '&:hover': {
+              backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            },
+            zIndex: 2,
+          }}
+        >
+          <ArrowForwardIos />
+        </IconButton>
+
+        {/* Slide indicators (dots) */}
+        <Box
+          sx={{
+            position: 'absolute',
+            bottom: 16,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            display: 'flex',
+            gap: 1,
+            zIndex: 2,
+          }}
+        >
+          {validImages.map((_, index) => (
+            <Box
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              role="button"
+              tabIndex={0}
+              aria-label={`Go to slide ${index + 1}`}
+              onKeyPress={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  setCurrentSlide(index);
+                }
+              }}
+              sx={{
+                width: 10,
+                height: 10,
+                borderRadius: '50%',
+                backgroundColor: currentSlide === index ? 'white' : 'rgba(255, 255, 255, 0.5)',
+                cursor: 'pointer',
+                transition: 'background-color 0.3s ease',
+                '&:hover': {
+                  backgroundColor: 'white',
+                },
+              }}
+            />
+          ))}
+        </Box>
+
+        {/* Image counter display */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 16,
+            right: 16,
+            backgroundColor: 'rgba(0, 0, 0, 0.7)',
+            color: 'white',
+            px: 2,
+            py: 1,
+            borderRadius: 1,
+            fontSize: '0.875rem',
+            zIndex: 2,
+          }}
+        >
+          {currentSlide + 1} / {validImages.length}
+        </Box>
+      </Box>
+    </Box>
+  );
+};
+
+// Enhanced News Item Component
 interface NewsItemProps {
-  item: {
-    id?: string;
-    date: string;
-    title: string;
-    description: string;
-    image: string;
-    fullContent: string;
-  };
+  item: NewsItem;
 }
 
 const NewsItem = ({ item }: NewsItemProps) => {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = useCallback(() => setOpen(true), []);
+  const handleClose = useCallback(() => setOpen(false), []);
+
+  // Handle keyboard interaction for accessibility
+  const handleKeyPress = useCallback((event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleOpen();
+    }
+  }, [handleOpen]);
 
   return (
     <>
-      <Box mb={3} sx={{ cursor: 'pointer' }} onClick={handleOpen}>
+      <Box 
+        mb={3} 
+        sx={{ cursor: 'pointer' }} 
+        onClick={handleOpen}
+        onKeyPress={handleKeyPress}
+        role="button"
+        tabIndex={0}
+        aria-label={`Read more about ${item.title}`}
+      >
         <Grid container spacing={1}>
           <Grid item xs={12}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={1}>
@@ -243,12 +569,13 @@ const NewsItem = ({ item }: NewsItemProps) => {
         <Divider sx={{ mt: 2 }} />
       </Box>
 
-      {/* Modified Modal Popup for News - Image on left, content on right */}
+      {/* Enhanced Modal Popup for News */}
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="news-modal-title"
         aria-describedby="news-modal-description"
+        closeAfterTransition
       >
         <Box sx={{
           position: 'absolute',
@@ -265,7 +592,7 @@ const NewsItem = ({ item }: NewsItemProps) => {
           p: 4,
         }}>
           <IconButton
-            aria-label="close"
+            aria-label="close modal"
             onClick={handleClose}
             sx={{
               position: 'absolute',
@@ -295,6 +622,10 @@ const NewsItem = ({ item }: NewsItemProps) => {
                   borderRadius: 2,
                   objectFit: 'cover',
                 }}
+                onError={(e) => {
+                  console.error('Error loading news image:', item.image);
+                  (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Image+Unavailable';
+                }}
               />
             </Grid>
             
@@ -303,7 +634,7 @@ const NewsItem = ({ item }: NewsItemProps) => {
               <Typography id="news-modal-title" variant="h5" component="h2" fontWeight="bold" color="primary" mb={2}>
                 {item.title}
               </Typography>
-              <Typography id="news-modal-description" variant="body1">
+              <Typography id="news-modal-description" variant="body1" sx={{ whiteSpace: 'pre-line' }}>
                 {item.fullContent}
               </Typography>
             </Grid>
@@ -314,27 +645,36 @@ const NewsItem = ({ item }: NewsItemProps) => {
   );
 };
 
-// Event Item Component with Popup functionality
+// Enhanced Event Item Component
 interface EventItemProps {
-  event: {
-    month: string;
-    day: string;
-    title: string;
-    description: string;
-    image: string;
-    fullContent: string;
-  };
+  event: EventItem;
 }
 
 const EventItem = ({ event }: EventItemProps) => {
   const [open, setOpen] = useState(false);
 
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleOpen = useCallback(() => setOpen(true), []);
+  const handleClose = useCallback(() => setOpen(false), []);
+
+  // Handle keyboard interaction for accessibility
+  const handleKeyPress = useCallback((event: React.KeyboardEvent) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      handleOpen();
+    }
+  }, [handleOpen]);
 
   return (
     <>
-      <Box mb={4} display="flex" sx={{ cursor: 'pointer' }} onClick={handleOpen}>
+      <Box 
+        mb={4} 
+        display="flex" 
+        sx={{ cursor: 'pointer' }} 
+        onClick={handleOpen}
+        onKeyPress={handleKeyPress}
+        role="button"
+        tabIndex={0}
+        aria-label={`Learn more about ${event.title}`}
+      >
         <Box
           sx={{
             backgroundColor: '#2980b9',
@@ -363,12 +703,13 @@ const EventItem = ({ event }: EventItemProps) => {
         </Box>
       </Box>
 
-      {/* Modified Modal Popup for Events - Image on left, content on right */}
+      {/* Enhanced Modal Popup for Events */}
       <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="event-modal-title"
         aria-describedby="event-modal-description"
+        closeAfterTransition
       >
         <Box sx={{
           position: 'absolute',
@@ -385,7 +726,7 @@ const EventItem = ({ event }: EventItemProps) => {
           p: 4,
         }}>
           <IconButton
-            aria-label="close"
+            aria-label="close modal"
             onClick={handleClose}
             sx={{
               position: 'absolute',
@@ -403,19 +744,28 @@ const EventItem = ({ event }: EventItemProps) => {
           </Typography>
           
           <Grid container spacing={3}>
-            {/* Image on the left */}
+            {/* Image/Slider on the left */}
             <Grid item xs={12} sm={5}>
-              <Box
-                component="img"
-                src={event.image}
-                alt={event.title}
-                sx={{
-                  width: '100%',
-                  height: 'auto',
-                  borderRadius: 2,
-                  objectFit: 'cover',
-                }}
-              />
+              {/* Conditional rendering: Show slider for events with multiple images */}
+              {event.images && event.images.length > 1 ? (
+                <ImageSlider images={event.images} alt={event.title} />
+              ) : (
+                <Box
+                  component="img"
+                  src={event.image}
+                  alt={event.title}
+                  sx={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: 2,
+                    objectFit: 'cover',
+                  }}
+                  onError={(e) => {
+                    console.error('Error loading event image:', event.image);
+                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/400x300?text=Image+Unavailable';
+                  }}
+                />
+              )}
             </Grid>
             
             {/* Content on the right */}
@@ -434,17 +784,27 @@ const EventItem = ({ event }: EventItemProps) => {
   );
 };
 
-// Dynamic Contact Info Component with clickable links
+// Enhanced Contact Info Component with error handling
 const ContactInfoSection = () => {
-  // Format phone number for href
-  const formatPhoneForHref = (phone: string) => {
-    return `tel:+91${phone}`; // Adding India country code +91
-  };
+  // Utility functions with validation
+  const formatPhoneForHref = useCallback((phone: string) => {
+    try {
+      return `tel:${phone}`;
+    } catch (error) {
+      console.error('Error formatting phone number:', error);
+      return '#';
+    }
+  }, []);
 
-  // Format WhatsApp link
-  const formatWhatsAppLink = (phone: string) => {
-    return `https://wa.me/91${phone}`; // WhatsApp deep link with India country code
-  };
+  const formatWhatsAppLink = useCallback((phone: string) => {
+    try {
+      const phoneNumber = phone.replace('+91', '').replace(/\D/g, ''); // Remove non-digits
+      return `https://wa.me/91${phoneNumber}`;
+    } catch (error) {
+      console.error('Error formatting WhatsApp link:', error);
+      return '#';
+    }
+  }, []);
 
   return (
     <Box>
@@ -453,7 +813,6 @@ const ContactInfoSection = () => {
         <Typography>{updatedContactInfo.address}</Typography>
       </Box>
       
-      {/* Email with mailto link */}
       <Box display="flex" alignItems="center" mb={2}>
         <Email sx={{ mr: 1 }} color="primary" />
         <Link
@@ -470,7 +829,6 @@ const ContactInfoSection = () => {
         </Link>
       </Box>
       
-      {/* Phone with tel link */}
       <Box display="flex" alignItems="center" mb={2}>
         <Phone sx={{ mr: 1 }} color="primary" />
         <Link
@@ -487,7 +845,6 @@ const ContactInfoSection = () => {
         </Link>
       </Box>
       
-      {/* WhatsApp with deep link */}
       <Box display="flex" alignItems="center">
         <WhatsApp sx={{ mr: 1 }} color="primary" />
         <Link
@@ -509,14 +866,16 @@ const ContactInfoSection = () => {
   );
 };
 
+// Main Home Component with enhanced structure
 const Home = () => {
+  // Memoized current year to prevent unnecessary recalculations
+  const currentYear = useMemo(() => new Date().getFullYear(), []);
+
   return (
-    <Box sx={{  minHeight: '100vh'}}>
+    <Box sx={{ minHeight: '100vh' }}>
       <Hero />
       <Container maxWidth="lg" sx={{ mt: 6 }}>
-     
-
-        {/* News and Events */}
+        {/* News and Events Section */}
         <Grid container spacing={4} alignItems="stretch">
           {/* News Section */}
           <Grid item xs={12} md={6}>
@@ -541,7 +900,7 @@ const Home = () => {
                 <Divider sx={{ mb: 3 }} />
                 
                 {newsItems.map((item, index) => (
-                  <NewsItem key={index} item={item} />
+                  <NewsItem key={`news-${index}`} item={item} />
                 ))}
               </Card>
             </motion.div>
@@ -570,14 +929,14 @@ const Home = () => {
                 <Divider sx={{ mb: 3 }} />
                 
                 {eventItems.map((event, index) => (
-                  <EventItem key={index} event={event} />
+                  <EventItem key={`event-${index}`} event={event} />
                 ))}
               </Card>
             </motion.div>
           </Grid>
         </Grid>
 
-        {/* Quick Links and Contact Info */}
+        {/* Quick Links and Contact Info Section */}
         <Grid container spacing={4} sx={{ mt: 2 }}>
           {/* Quick Links */}
           <Grid item xs={12} md={4}>
@@ -603,13 +962,13 @@ const Home = () => {
                 <List>
                   {quickLinks.map((link, index) => (
                     <ListItem 
-                      key={index} 
+                      key={`link-${index}`}
                       disablePadding 
                       sx={{ mb: 1 }}
-                      component={link.internal ? RouterLink : "a"} // Use RouterLink for internal links
-                      to={link.internal ? link.url : undefined} // Use 'to' for internal links
-                      href={!link.internal ? link.url : undefined} // Use 'href' for external links
-                      target={!link.internal ? "_blank" : undefined} // Open external links in a new tab
+                      component={link.internal ? RouterLink : "a"}
+                      to={link.internal ? link.url : undefined}
+                      href={!link.internal ? link.url : undefined}
+                      target={!link.internal ? "_blank" : undefined}
                       rel={!link.internal ? "noopener noreferrer" : undefined}
                     >
                       <ListItemIcon>
@@ -644,7 +1003,6 @@ const Home = () => {
                 </Typography>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={6}>
-                    {/* Use the new dynamic Contact Info Component */}
                     <ContactInfoSection />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -660,7 +1018,7 @@ const Home = () => {
         <Box textAlign="center" mt={8} color="text.secondary">
           <Divider sx={{ my: 3 }} />
           <Typography variant="body2">
-            &copy; {new Date().getFullYear()} CSD & CSIT Department. All rights reserved.
+            &copy; {currentYear} CSD & CSIT Department. All rights reserved.
           </Typography>
         </Box>
       </Container>
