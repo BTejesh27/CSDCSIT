@@ -15,14 +15,14 @@ import WorkIcon from "@mui/icons-material/Work";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import BusinessIcon from "@mui/icons-material/Business";
 import SchoolIcon from "@mui/icons-material/School";
-import { Interns, testimonials, recruiters, mouData } from "./api/Home";
-import { useState } from "react";
+import {  recruiters, mouData } from "./api/Home";
+import { useState, useEffect } from "react";
 
 const stats = [
-  { icon: <WorkIcon fontSize="large" />, label: "Total Placements", value: "150+" },
+  { icon: <WorkIcon fontSize="large" />, label: "Total Placements", value: "30+" },
   { icon: <EmojiEventsIcon fontSize="large" />, label: "Highest Package", value: "₹12 LPA" },
-  { icon: <BusinessIcon fontSize="large" />, label: "Top Recruiters", value: "35+" },
-  { icon: <SchoolIcon fontSize="large" />, label: "Internships", value: "80+" },
+  { icon: <BusinessIcon fontSize="large" />, label: "Top Recruiters", value: "10+" },
+  { icon: <SchoolIcon fontSize="large" />, label: "Internships", value: "20+" },
 ];
 
 const Placements = () => {
@@ -31,6 +31,24 @@ const Placements = () => {
   // State for show more functionality
   const [placementsToShow, setPlacementsToShow] = useState(3);
   const [internsToShow, setInternsToShow] = useState(3);
+
+  // State for API data
+  const [internships, setInternships] = useState<any[]>([]);
+  const [placements, setPlacements] = useState<any[]>([]);
+
+  useEffect(() => {
+    // Fetch internships
+    fetch("http://localhost:3000/internships")
+      .then((res) => res.json())
+      .then((data) => setInternships(data))
+      .catch((err) => console.error("Failed to fetch internships", err));
+
+    // Fetch placements
+    fetch("http://localhost:3000/placements")
+      .then((res) => res.json())
+      .then((data) => setPlacements(data))
+      .catch((err) => console.error("Failed to fetch placements", err));
+  }, []);
 
   const handleMorePlacements = () => setPlacementsToShow((prev) => prev + 3);
   const handleMoreInterns = () => setInternsToShow((prev) => prev + 3);
@@ -80,8 +98,8 @@ const Placements = () => {
           Top Placements
         </Typography>
         <Grid container spacing={4} sx={{ mb: 3 }}>
-          {testimonials.slice(0, placementsToShow).map((t, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={idx}>
+          {placements.slice(0, placementsToShow).map((t, idx) => (
+            <Grid item xs={12} sm={6} md={4} key={t._id || idx}>
               <Card
                 sx={{
                   borderRadius: 4,
@@ -93,20 +111,34 @@ const Placements = () => {
                   },
                 }}
               >
-                <CardMedia component="img" height="220" image={t.image} alt={t.name} />
+                <CardMedia
+                  component="img"
+                  height="220"
+                  image={t.imagePath?.replace(/^public\//, "/") || "/default.jpg"}
+                  alt={t.studentName}
+                />
                 <CardContent>
                   <Typography variant="h6" fontWeight={600}>
-                    {t.name} – {t.company}
+                    {t.studentName} – {t.company}
                   </Typography>
                   <Typography color="text.secondary" sx={{ mt: 1 }}>
-                    "{t.message}"
+                    {t.role}
+                  </Typography>
+                  <Typography color="text.secondary" sx={{ mt: 1 }}>
+                    {t.description}
+                  </Typography>
+                  <Typography color="text.secondary" sx={{ mt: 1 }}>
+                    Package: ₹{t.package}
+                  </Typography>
+                  <Typography color="text.secondary" sx={{ mt: 1 }}>
+                    Year: {t.year}
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
           ))}
         </Grid>
-        {placementsToShow < testimonials.length ? (
+        {placementsToShow < placements.length ? (
           <Button onClick={handleMorePlacements} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
             Show More
           </Button>
@@ -152,8 +184,8 @@ const Placements = () => {
           Top Internships
         </Typography>
         <Grid container spacing={4} sx={{ mb: 3 }}>
-          {Interns.slice(0, internsToShow).map((t, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={idx}>
+          {internships.slice(0, internsToShow).map((t, idx) => (
+            <Grid item xs={12} sm={6} md={4} key={t._id || idx}>
               <Card
                 sx={{
                   borderRadius: 4,
@@ -165,20 +197,31 @@ const Placements = () => {
                   },
                 }}
               >
-                <CardMedia component="img" height="220" image={t.image} alt={t.name} />
+                <CardMedia
+                  component="img"
+                  height="220"
+                  image={t.imagePath?.replace(/^public\//, "/") || "/default.jpg"}
+                  alt={t.studentName}
+                />
                 <CardContent>
                   <Typography variant="h6" fontWeight={600}>
-                    {t.name} – {t.company}
+                    {t.studentName} – {t.company}
                   </Typography>
                   <Typography color="text.secondary" sx={{ mt: 1 }}>
-                    "{t.message}"
+                    {t.role}
+                  </Typography>
+                  <Typography color="text.secondary" sx={{ mt: 1 }}>
+                    {t.description}
+                  </Typography>
+                  <Typography color="text.secondary" sx={{ mt: 1 }}>
+                    Stipend: ₹{t.stipend}
                   </Typography>
                 </CardContent>
               </Card>
             </Grid>
           ))}
         </Grid>
-        {internsToShow < Interns.length ? (
+        {internsToShow < internships.length ? (
           <Button onClick={handleMoreInterns} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
             Show More
           </Button>
