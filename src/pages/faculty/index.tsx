@@ -1,119 +1,51 @@
-import React, { memo } from 'react';
-import { Mail, MapPin, Bookmark, Award, Globe, Clock } from 'lucide-react';
+import React, { memo, useEffect, useState } from 'react';
+import { Mail, MapPin, Bookmark, Award, Globe, Clock, Phone } from 'lucide-react';
 import { Box, Typography, Grid, Card, CardContent, Avatar, Chip, Link, useTheme } from '@mui/material';
 
-// Import images
-import imgA from './img/a.jpg';
-import imgB from './img/b.jpg';
-import imgC from './img/c.jpg';
-import imgD from './img/d.jpg';
-import imgE from './img/e.jpg';
-import imgF from './img/f.jpg';
-
 interface Faculty {
-  id: number;
+  id: string;
   name: string;
   role: string;
   image: string;
   qualifications: string[];
   researchInterests: string[];
   email: string;
+  phone: string;
   office: string;
   officeHours: string;
   website?: string;
 }
 
-const facultyData: Faculty[] = [
-  {
-    id: 1,
-    name: "Surya",
-    role: "Assistant Professor & M.Tech",
-    image: imgA,
-    qualifications: ["M.Tech"],
-    researchInterests: ["HCI", "HCI Lab"],
-    email: "8985352449",
-    office: "N/A",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 2,
-    name: "Sindhuri Suseela Mantena",
-    role: "Assistant Professor & M.Tech (PhD)",
-    image: imgB,
-    qualifications: ["M.Tech", "PhD (Pursuing)"],
-    researchInterests: ["Machine Learning", "C", "Deep Learning", "Java", "Data Structures", "DLD", "Computer Organization"],
-    email: "mss@srkrec.ac.in",
-    office: "N/A",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 3,
-    name: "Pericherla Manoj",
-    role: "M.Tech",
-    image: imgC,
-    qualifications: ["M.Tech"],
-    researchInterests: ["Computer Science Engineering"],
-    email: "7036256222",
-    office: "N/A",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 4,
-    name: "Mr. Praveen Kumar",
-    role: "Associate Professor",
-    image: imgD,
-    qualifications: [
-      "Ph.D. in Database Systems",
-      "M.Tech in Information Systems",
-    ],
-    researchInterests: ["Database Systems", "Big Data", "Data Analytics"],
-    email: "praveenkumar@srkrec.edu.in",
-    office: "Information Technology Department",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 5,
-    name: "Mr. Mohan Krishna",
-    role: "Associate Professor",
-    image: imgE,
-    qualifications: [
-      "Ph.D. in Computer Science",
-      "M.Tech in Computer Networks",
-      "B.Tech in Computer Science"
-    ],
-    researchInterests: ["Operating System", "Network Security", "Computer Networks"],
-    email: "mohan.krishna@srkrec.edu.in",
-    office: "Computer Science & Design Department",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 6,
-    name: "Mr. Sunil",
-    role: "Professor",
-    image: imgF,
-    qualifications: [
-      "Ph.D. in Database Systems",
-      "M.Tech in Computer Science",
-      "B.Tech in Computer Science"
-    ],
-    researchInterests: ["Database Systems", "Data Analytics", "Data Mining"],
-    email: "sunil@srkrec.edu.in",
-    office: "Computer Science & Design Department",
-    officeHours: "N/A",
-    website: undefined
-  }
-];
-
-// Reusable FacultyCard Component
-const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
+const FacultyPage: React.FC = () => {
   const theme = useTheme();
+  const [facultyData, setFacultyData] = useState<Faculty[]>([]);
 
-  return (
+  useEffect(() => {
+    fetch('http://localhost:3000/faculty')
+      .then(res => res.json())
+      .then((data) => {
+        const mapped = data.map((item: any) => ({
+          id: item._id,
+          name: item.name,
+          role: "Faculty",
+          image: item.imagePath?.replace(/^public\//, "/") || "/default.jpg", // Use API image
+          qualifications: item.qualifications ?? [],
+          researchInterests: item.subjects ?? [],
+          email: item.mail ?? "",
+          phone: item.number ?? "",
+          office: item.location ?? "N/A",
+          officeHours: "N/A",
+          website: undefined,
+        }));
+        setFacultyData(mapped);
+      })
+      .catch((err) => {
+        console.error("Error fetching faculty data:", err);
+      });
+  }, []);
+
+  // Pass theme as prop to avoid re-calling useTheme inside memo
+  const FacultyCard = memo(({ faculty, theme }: { faculty: Faculty; theme: any }) => (
     <Card
       sx={{
         borderRadius: 16,
@@ -129,7 +61,7 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <Avatar
             src={faculty.image}
-            alt={`${faculty.name}'s photo`}
+            alt={faculty.name + "'s photo"}
             sx={{
               width: 120,
               height: 120,
@@ -147,8 +79,8 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
             </Typography>
             {faculty.website && (
               <Link href={faculty.website} target="_blank" rel="noopener" underline="hover">
-                <Typography variant="body2" color="text.secondary">
-                  <Globe style={{ width: 16, height: 16, marginRight: 4 }} />
+                <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Globe style={{ width: 16, height: 16 }} />
                   Website
                 </Typography>
               </Link>
@@ -196,18 +128,30 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
                 Contact Information
               </Typography>
               <Box sx={{ pl: 3 }}>
+                {faculty.email && (
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}
+                  >
+                    <Mail style={{ width: 16, height: 16 }} />
+                    {faculty.email}
+                  </Typography>
+                )}
+                {faculty.phone && (
+                  <Typography
+                    variant="body2"
+                    color="text.secondary"
+                    sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
+                  >
+                    <Phone style={{ width: 16, height: 16 }} />
+                    {faculty.phone}
+                  </Typography>
+                )}
                 <Typography
                   variant="body2"
                   color="text.secondary"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}
-                >
-                  <Mail style={{ width: 16, height: 16 }} />
-                  {faculty.email}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}
+                  sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}
                 >
                   <MapPin style={{ width: 16, height: 16 }} />
                   {faculty.office}
@@ -235,7 +179,8 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
                 sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
               >
                 <Bookmark style={{ width: 20, height: 20 }} />
-Subjects               </Typography>
+                Subjects
+              </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, pl: 3 }}>
                 {faculty.researchInterests.map((interest, index) => (
                   <Chip
@@ -254,40 +199,38 @@ Subjects               </Typography>
         </Grid>
       </CardContent>
     </Card>
-  );
-});
-
-const FacultyPage: React.FC = () => {
-  const theme = useTheme(); // Access the current theme
+  ));
 
   return (
     <Box
       sx={{
-        minHeight: "100vh",
-        background: theme.palette.mode === "dark"
-          ? "linear-gradient(to bottom right, #121212, #1e1e1e)" // Dark mode background
-          : "linear-gradient(to bottom right, #f0f4ff, #e8f0ff)", // Light mode background
+        minHeight: '100vh',
+        background:
+          theme.palette.mode === 'dark'
+            ? 'linear-gradient(to bottom right, #121212, #1e1e1e)'
+            : 'linear-gradient(to bottom right, #f0f4ff, #e8f0ff)',
       }}
     >
-      <Box sx={{ maxWidth: "1200px", mx: "auto", px: 2, py: 4 }}>
+      <Box sx={{ maxWidth: '1200px', mx: 'auto', px: 2, py: 4 }}>
         {/* Header */}
         <Box
           sx={{
-            textAlign: "center",
+            textAlign: 'center',
             mb: 5,
             p: 4,
             borderRadius: 4,
-            background: theme.palette.mode === "dark"
-              ? "linear-gradient(to right, #333333, #444444)" // Dark mode header
-              : "linear-gradient(to right, #4f46e5, #9333ea)", // Light mode header
-            color: "white",
+            background:
+              theme.palette.mode === 'dark'
+                ? 'linear-gradient(to right, #333333, #444444)'
+                : 'linear-gradient(to right, #4f46e5, #9333ea)',
+            color: 'white',
             boxShadow: 6,
           }}
         >
           <Typography variant="h2" fontWeight="bold" gutterBottom>
             Meet Our Distinguished Faculty
           </Typography>
-          <Typography variant="h6" sx={{ maxWidth: "600px", mx: "auto" }}>
+          <Typography variant="h6" sx={{ maxWidth: '600px', mx: 'auto' }}>
             Pioneering the future of computer science through groundbreaking research and exceptional education.
           </Typography>
         </Box>
@@ -296,7 +239,7 @@ const FacultyPage: React.FC = () => {
         <Grid container spacing={4}>
           {facultyData.map((faculty) => (
             <Grid item xs={12} md={6} key={faculty.id}>
-              <FacultyCard faculty={faculty} />
+              <FacultyCard faculty={faculty} theme={theme} />
             </Grid>
           ))}
         </Grid>
