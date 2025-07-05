@@ -36,6 +36,14 @@ const Placements = () => {
   const { data: placements = [], isLoading: loadingPlacements, error: errorPlacements } = usePlacements();
   const { data: internships = [], isLoading: loadingInternships, error: errorInternships } = useInternships();
 
+  // Debug logging
+  console.log("🔍 Placements Debug:", {
+    placements,
+    loadingPlacements,
+    errorPlacements,
+    placementsLength: placements.length
+  });
+
   const handleMorePlacements = () => setPlacementsToShow((prev) => prev + 3);
   const handleMoreInterns = () => setInternsToShow((prev) => prev + 3);
   const handleLessPlacements = () => setPlacementsToShow(3);
@@ -86,7 +94,15 @@ const Placements = () => {
         {loadingPlacements ? (
           <Typography align="center">Loading placements...</Typography>
         ) : errorPlacements ? (
-          <Typography color="error" align="center">{errorPlacements.message}</Typography>
+          <Box sx={{ textAlign: 'center', p: 3 }}>
+            <Typography color="error" variant="h6">Failed to load placements</Typography>
+            <Typography color="error" sx={{ mt: 1 }}>{errorPlacements.message}</Typography>
+            <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
+              Make sure your backend server is running on http://localhost:3000
+            </Typography>
+          </Box>
+        ) : placements.length === 0 ? (
+          <Typography align="center" sx={{ py: 4 }}>No placements data available</Typography>
         ) : (
           <>
             <Grid container spacing={4} sx={{ mb: 3 }}>
@@ -106,7 +122,7 @@ const Placements = () => {
                     <CardMedia
                       component="img"
                       height="220"
-                      image={t.imagePath?.replace(/^public\//, "/") || "/default.jpg"}
+                      image={t.imageUrl || "/default.jpg"}
                       alt={t.studentName}
                     />
                     <CardContent>
