@@ -137,7 +137,8 @@ const FacultyPage: React.FC = () => {
     id: item._id,
     name: item.name,
     role: "Faculty",
-    image: item.imagePath?.replace(/^public\//, "/") || "/default.jpg",
+    // Support both new base64 images and old imagePath for backward compatibility
+    image: item.imageUrl || (item.imagePath?.replace(/^public\//, "/")) || "/default.jpg",
     qualifications: item.qualifications ?? [],
     researchInterests: item.subjects ?? [],
     email: item.mail ?? "",

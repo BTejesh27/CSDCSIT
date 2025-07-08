@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { TextField, Button, Box, Alert } from "@mui/material";
 
-export function InternshipForm() {
+export function EventForm() {
   const [form, setForm] = useState({
-    studentName: "",
-    company: "",
-    role: "",
-    year: "",
-    stipend: "",
+    title: "",
     description: "",
+    date: "",
+    location: "",
+    organizer: "",
   });
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -56,19 +55,17 @@ export function InternshipForm() {
 
       const payload = {
         ...form,
-        year: Number(form.year),
-        stipend: Number(form.stipend),
-        image: imageData, // Send base64 data as image field (matching backend expectation)
+        image: imageData, // Send base64 data as image field
         imageName: selectedImage ? selectedImage.name : "", // Send original filename
       };
 
-      console.log("📤 Sending internship data to backend:", {
+      console.log("📤 Sending event data to backend:", {
         ...payload,
         image: imageData ? `[Base64 image data - ${imageData.length} chars]` : "No image",
         imageName: selectedImage ? selectedImage.name : "No image file"
       });
 
-      const internshipRes = await fetch("http://localhost:3000/internships", {
+      const eventRes = await fetch("http://localhost:3000/events", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,24 +73,23 @@ export function InternshipForm() {
         body: JSON.stringify(payload),
       });
 
-      const internshipResult = await internshipRes.text(); // Use text() since backend sends string responses
+      const eventResult = await eventRes.text(); // Use text() since backend sends string responses
 
-      console.log("📥 Backend response:", internshipRes.status, internshipResult);
+      console.log("📥 Backend response:", eventRes.status, eventResult);
 
-      if (internshipRes.ok) {
-        setMessage(`✅ ${internshipResult}`);
+      if (eventRes.ok) {
+        setMessage(`✅ ${eventResult}`);
         setForm({
-          studentName: "",
-          company: "",
-          role: "",
-          year: "",
-          stipend: "",
+          title: "",
           description: "",
+          date: "",
+          location: "",
+          organizer: "",
         });
         setSelectedImage(null);
         setImagePreview(null);
       } else {
-        setMessage(`❌ ${internshipResult || 'Failed to save internship'}`);
+        setMessage(`❌ ${eventResult || 'Failed to save event'}`);
       }
     } catch (error) {
       setMessage("❌ An error occurred while submitting the form");
@@ -108,41 +104,9 @@ export function InternshipForm() {
       {message && <Alert severity={message.startsWith("✅") ? "success" : "error"}>{message}</Alert>}
       
       <TextField 
-        label="Student Name" 
-        name="studentName" 
-        value={form.studentName} 
-        onChange={handleChange} 
-        required 
-      />
-      
-      <TextField 
-        label="Company" 
-        name="company" 
-        value={form.company} 
-        onChange={handleChange} 
-        required 
-      />
-      
-      <TextField 
-        label="Role" 
-        name="role" 
-        value={form.role} 
-        onChange={handleChange} 
-        required 
-      />
-      
-      <TextField 
-        label="Year" 
-        name="year" 
-        value={form.year} 
-        onChange={handleChange} 
-        required 
-      />
-      
-      <TextField 
-        label="Stipend" 
-        name="stipend" 
-        value={form.stipend} 
+        label="Event Title" 
+        name="title" 
+        value={form.title} 
         onChange={handleChange} 
         required 
       />
@@ -151,6 +115,36 @@ export function InternshipForm() {
         label="Description" 
         name="description" 
         value={form.description} 
+        onChange={handleChange} 
+        multiline
+        rows={4}
+        required 
+      />
+      
+      <TextField 
+        label="Date" 
+        name="date" 
+        type="date"
+        value={form.date} 
+        onChange={handleChange} 
+        InputLabelProps={{
+          shrink: true,
+        }}
+        required 
+      />
+      
+      <TextField 
+        label="Location" 
+        name="location" 
+        value={form.location} 
+        onChange={handleChange} 
+        required 
+      />
+      
+      <TextField 
+        label="Organizer" 
+        name="organizer" 
+        value={form.organizer} 
         onChange={handleChange} 
         required 
       />
@@ -208,7 +202,7 @@ export function InternshipForm() {
         variant="contained" 
         disabled={isUploading}
       >
-        {isUploading ? 'Uploading...' : 'Submit'}
+        {isUploading ? 'Uploading...' : 'Submit Event'}
       </Button>
     </Box>
   );

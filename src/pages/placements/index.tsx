@@ -196,7 +196,15 @@ const Placements = () => {
         {loadingInternships ? (
           <Typography align="center">Loading internships...</Typography>
         ) : errorInternships ? (
-          <Typography color="error" align="center">{errorInternships.message}</Typography>
+          <Box sx={{ textAlign: 'center', p: 3 }}>
+            <Typography color="error" variant="h6">Failed to load internships</Typography>
+            <Typography color="error" sx={{ mt: 1 }}>{errorInternships.message}</Typography>
+            <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
+              Make sure your backend server is running on http://localhost:3000
+            </Typography>
+          </Box>
+        ) : internships.length === 0 ? (
+          <Typography align="center" sx={{ py: 4 }}>No internships data available</Typography>
         ) : (
           <>
             <Grid container spacing={4} sx={{ mb: 3 }}>
@@ -216,7 +224,7 @@ const Placements = () => {
                     <CardMedia
                       component="img"
                       height="220"
-                      image={t.imagePath?.replace(/^public\//, "/") || "/default.jpg"}
+                      image={t.imageUrl || "/default.jpg"}
                       alt={t.studentName}
                     />
                     <CardContent>
@@ -231,6 +239,9 @@ const Placements = () => {
                       </Typography>
                       <Typography color="text.secondary" sx={{ mt: 1 }}>
                         Stipend: ₹{t.stipend}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        Year: {t.year}
                       </Typography>
                     </CardContent>
                   </Card>
