@@ -1,84 +1,47 @@
 import { useState } from "react";
 import FacultyForm from "./components/FacultyForm";
-import PlacementForm from "./components/PlacementForm";
+import { PlacementForm } from "./components/PlacementForm";
 import { InternshipForm } from "./components/InternshipForm";
 import { EventForm } from "./components/EventForm";
 import { NewsForm } from "./components/NewsForm";
-import { Button, Box, Typography, Container } from "@mui/material";
+import SyllabusForm from "./components/SyllabusForm";
+import { Box, Typography, Container } from "@mui/material";
+import AdminSidebar from "./AdminSidebar";
 
 export default function AdminDashboard() {
   const [view, setView] = useState<
-    "faculty" | "placements" | "internships" | "events" | "news"
+    "faculty" | "placements" | "internships" | "events" | "news" | "syllabus"
   >("faculty");
 
   return (
-    <Container maxWidth="lg" sx={{ py: 4 }}>
-      <Typography
-        variant="h4"
-        align="center"
-        fontWeight="bold"
-        gutterBottom
-      >
-        Admin Dashboard
-      </Typography>
-
-      <Box
-        sx={{
-          display: "flex",
-          gap: 2,
-          mb: 4,
-          flexWrap: "wrap",
-          justifyContent: "center",
-        }}
-      >
-        <Button
-          variant={view === "faculty" ? "contained" : "outlined"}
-          onClick={() => setView("faculty")}
+    <Box sx={{ display: "flex", minHeight: "100vh" }}>
+      <AdminSidebar view={view} setView={setView} />
+      <Container maxWidth="lg" sx={{ py: 4, flex: 1 }}>
+        <Typography
+          variant="h4"
+          align="center"
+          fontWeight="bold"
+          gutterBottom
         >
-          Faculty
-        </Button>
-        <Button
-          variant={view === "placements" ? "contained" : "outlined"}
-          onClick={() => setView("placements")}
+          Admin Dashboard
+        </Typography>
+        <Box
+          sx={{
+            mx: "auto",
+            p: 3,
+            border: "1px solid #ddd",
+            borderRadius: 2,
+            backgroundColor: "background.paper",
+          }}
         >
-          Placements
-        </Button>
-        <Button
-          variant={view === "internships" ? "contained" : "outlined"}
-          onClick={() => setView("internships")}
-        >
-          Internships
-        </Button>
-        <Button
-          variant={view === "events" ? "contained" : "outlined"}
-          onClick={() => setView("events")}
-        >
-          Events
-        </Button>
-        <Button
-          variant={view === "news" ? "contained" : "outlined"}
-          onClick={() => setView("news")}
-        >
-          News
-        </Button>
-      </Box>
-
-      <Box
-        sx={{
-          maxWidth: 600,
-          mx: "auto",
-          p: 3,
-          border: "1px solid #ddd",
-          borderRadius: 2,
-          backgroundColor: "background.paper",
-        }}
-      >
-        {view === "faculty" && <FacultyForm />}
-        {view === "placements" && <PlacementForm />}
-        {view === "internships" && <InternshipForm />}
-        {view === "events" && <EventForm />}
-        {view === "news" && <NewsForm />}
-      </Box>
-    </Container>
+          {view === "faculty" && <FacultyForm />}
+          {view === "placements" && <PlacementForm />}
+          {view === "internships" && <InternshipForm />}
+          {view === "events" && <EventForm />}
+          {view === "news" && <NewsForm />}
+          {view === "syllabus" && <SyllabusForm />}
+        </Box>
+      </Container>
+    </Box>
   );
 }
