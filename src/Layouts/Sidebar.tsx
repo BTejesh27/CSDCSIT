@@ -9,7 +9,7 @@ import {
   Typography,
   IconButton,
   useTheme,
-} from '@mui/material';
+} from "@mui/material";
 import {
   Home as HomeIcon,
   Info as InfoIcon,
@@ -18,10 +18,11 @@ import {
   Science as ScienceIcon,
   Domain as DomainIcon,
   School as SchoolIcon,
-} from '@mui/icons-material';
-import { Brightness4, Brightness7 } from '@mui/icons-material';
-import { Link, useLocation } from 'react-router-dom';
-import historyImage from '../assests/images/csdlogo.jpeg';
+} from "@mui/icons-material";
+import { Brightness4, Brightness7 } from "@mui/icons-material";
+import { Link, useLocation } from "react-router-dom";
+import historyImage from "../assests/images/csdlogo.jpeg";
+import { text } from "framer-motion/client";
 
 const drawerWidth = 240;
 
@@ -33,38 +34,57 @@ interface SidebarProps {
 }
 
 const menuItems = [
-  { text: 'Home', icon: <HomeIcon />, path: '/' },
-  { text: 'About', icon: <InfoIcon />, path: '/about' },
-  { text: 'Placements', icon: <SchoolIcon />, path: '/placements' },
-  { text: 'Projects', icon: <ScienceIcon />, path: '/research' },
-  { text: 'Faculty', icon: <PeopleIcon />, path: '/faculty' },
-  { text: 'Academic', icon: <CalendarIcon />, path: '/academic' },
-  { text: 'Facilities', icon: <DomainIcon />, path: '/facilities' },
+  { text: "Home", icon: <HomeIcon />, path: "/" },
+  { text: "About", icon: <InfoIcon />, path: "/about" },
+  { text: "Placements", icon: <SchoolIcon />, path: "/placements" },
+  { text: "Projects", icon: <ScienceIcon />, path: "/research" },
+  { text: "Faculty", icon: <PeopleIcon />, path: "/faculty" },
+  { text: "Syllabus", icon: <SchoolIcon />, path: "/syllabus" },
+  { text: "Academic", icon: <CalendarIcon />, path: "/academic" },
+  { text: "Facilities", icon: <DomainIcon />, path: "/facilities" },
 ];
 
-const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps) => {
+const Sidebar = ({
+  mobileOpen,
+  onClose,
+  darkMode,
+  toggleDarkMode,
+}: SidebarProps) => {
   const location = useLocation();
   const theme = useTheme();
+
+  // Hide sidebar on /admin (admin login) route
+  if (location.pathname === "/admin") {
+    return null;
+  }
 
   const drawer = (
     <Box
       sx={{
         mt: 2,
-        height: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
       }}
     >
-      <Box sx={{ px: 2, mb: 3, display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-        <Typography variant="h3" color="primary" sx={{ fontWeight: 'bold' }}>
+      <Box
+        sx={{
+          px: 2,
+          mb: 3,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <Typography variant="h3" color="primary" sx={{ fontWeight: "bold" }}>
           CSD & CSIT
         </Typography>
         <IconButton onClick={toggleDarkMode} color="inherit">
           {darkMode ? <Brightness7 /> : <Brightness4 />}
         </IconButton>
       </Box>
-      <Box sx={{ flexGrow: 1, minHeight: 0, overflowY: 'auto' }}>
+      <Box sx={{ flexGrow: 1, minHeight: 0, overflowY: "auto" }}>
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
@@ -73,16 +93,16 @@ const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps
                 to={item.path}
                 selected={location.pathname === item.path}
                 sx={{
-                  '&.Mui-selected': {
-                    backgroundColor: 'primary.light',
-                    '&:hover': {
-                      backgroundColor: 'primary.light',
+                  "&.Mui-selected": {
+                    backgroundColor: "primary.light",
+                    "&:hover": {
+                      backgroundColor: "primary.light",
                     },
-                    '& .MuiListItemIcon-root': {
-                      color: 'primary.main',
+                    "& .MuiListItemIcon-root": {
+                      color: "primary.main",
                     },
-                    '& .MuiListItemText-primary': {
-                      color: 'primary.main',
+                    "& .MuiListItemText-primary": {
+                      color: "primary.main",
                       fontWeight: 600,
                     },
                   },
@@ -91,7 +111,7 @@ const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps
                 <ListItemIcon
                   sx={{
                     minWidth: 40,
-                    color: 'grey.700',
+                    color: "grey.700",
                   }}
                 >
                   {item.icon}
@@ -102,11 +122,19 @@ const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps
           ))}
         </List>
       </Box>
-      <Box sx={{ p: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', flexShrink: 0 }}>
+      <Box
+        sx={{
+          p: 2,
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexShrink: 0,
+        }}
+      >
         <img
           src={historyImage}
           alt="Logo"
-          style={{ width: '80%', maxWidth: 120, borderRadius: 8 }}
+          style={{ width: "80%", maxWidth: 120, borderRadius: 8 }}
         />
       </Box>
     </Box>
@@ -123,9 +151,9 @@ const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps
         onClose={onClose}
         ModalProps={{ keepMounted: true }}
         sx={{
-          display: { xs: 'block', sm: 'none' },
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
+          display: { xs: "block", sm: "none" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
             width: drawerWidth,
             backgroundColor: theme.palette.background.paper,
           },
@@ -136,11 +164,11 @@ const Sidebar = ({ mobileOpen, onClose, darkMode, toggleDarkMode }: SidebarProps
       <Drawer
         variant="permanent"
         sx={{
-          display: { xs: 'none', sm: 'block' },
-          '& .MuiDrawer-paper': {
-            boxSizing: 'border-box',
+          display: { xs: "none", sm: "block" },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
             width: drawerWidth,
-            backgroundColor: theme.palette.background.paper, 
+            backgroundColor: theme.palette.background.paper,
           },
         }}
         open

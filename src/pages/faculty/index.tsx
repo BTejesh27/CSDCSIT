@@ -1,118 +1,23 @@
-import React, { memo } from 'react';
-import { Mail, MapPin, Bookmark, Award, Globe, Clock } from 'lucide-react';
+import React from 'react';
+import { Mail, MapPin, Bookmark, Award, Globe, Clock, Phone } from 'lucide-react';
 import { Box, Typography, Grid, Card, CardContent, Avatar, Chip, Link, useTheme } from '@mui/material';
-
-// Import images
-import imgA from './img/a.jpg';
-import imgB from './img/b.jpg';
-import imgC from './img/c.jpg';
-import imgD from './img/d.jpg';
-import imgE from './img/e.jpg';
-import imgF from './img/f.jpg';
+import { useGetFaculties } from './api/getFaculties';
 
 interface Faculty {
-  id: number;
+  id: string;
   name: string;
   role: string;
   image: string;
   qualifications: string[];
   researchInterests: string[];
   email: string;
+  phone: string;
   office: string;
   officeHours: string;
   website?: string;
 }
 
-const facultyData: Faculty[] = [
-  {
-    id: 1,
-    name: "Surya",
-    role: "Assistant Professor & M.Tech",
-    image: imgA,
-    qualifications: ["M.Tech"],
-    researchInterests: ["HCI", "HCI Lab"],
-    email: "8985352449",
-    office: "N/A",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 2,
-    name: "Sindhuri Suseela Mantena",
-    role: "Assistant Professor & M.Tech (PhD)",
-    image: imgB,
-    qualifications: ["M.Tech", "PhD (Pursuing)"],
-    researchInterests: ["Machine Learning", "C", "Deep Learning", "Java", "Data Structures", "DLD", "Computer Organization"],
-    email: "mss@srkrec.ac.in",
-    office: "N/A",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 3,
-    name: "Pericherla Manoj",
-    role: "M.Tech",
-    image: imgC,
-    qualifications: ["M.Tech"],
-    researchInterests: ["Computer Science Engineering"],
-    email: "7036256222",
-    office: "N/A",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 4,
-    name: "Mr. Praveen Kumar",
-    role: "Associate Professor",
-    image: imgD,
-    qualifications: [
-      "Ph.D. in Database Systems",
-      "M.Tech in Information Systems",
-    ],
-    researchInterests: ["Database Systems", "Big Data", "Data Analytics"],
-    email: "praveenkumar@srkrec.edu.in",
-    office: "Information Technology Department",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 5,
-    name: "Mr. Mohan Krishna",
-    role: "Associate Professor",
-    image: imgE,
-    qualifications: [
-      "Ph.D. in Computer Science",
-      "M.Tech in Computer Networks",
-      "B.Tech in Computer Science"
-    ],
-    researchInterests: ["Operating System", "Network Security", "Computer Networks"],
-    email: "mohan.krishna@srkrec.edu.in",
-    office: "Computer Science & Design Department",
-    officeHours: "N/A",
-    website: undefined
-  },
-  {
-    id: 6,
-    name: "Mr. Sunil",
-    role: "Professor",
-    image: imgF,
-    qualifications: [
-      "Ph.D. in Database Systems",
-      "M.Tech in Computer Science",
-      "B.Tech in Computer Science"
-    ],
-    researchInterests: ["Database Systems", "Data Analytics", "Data Mining"],
-    email: "sunil@srkrec.edu.in",
-    office: "Computer Science & Design Department",
-    officeHours: "N/A",
-    website: undefined
-  }
-];
-
-// Reusable FacultyCard Component
-const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
-  const theme = useTheme();
-
+function FacultyCard({ faculty, theme }: { faculty: Faculty; theme: any }) {
   return (
     <Card
       sx={{
@@ -125,11 +30,10 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
       }}
     >
       <CardContent>
-        {/* Header */}
         <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
           <Avatar
             src={faculty.image}
-            alt={`${faculty.name}'s photo`}
+            alt={faculty.name}
             sx={{
               width: 120,
               height: 120,
@@ -139,7 +43,7 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
             }}
           />
           <Box>
-            <Typography variant="h5" fontWeight="bold" color="text.primary">
+            <Typography variant="h5" fontWeight="bold">
               {faculty.name}
             </Typography>
             <Typography variant="subtitle1" color="primary">
@@ -147,34 +51,23 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
             </Typography>
             {faculty.website && (
               <Link href={faculty.website} target="_blank" rel="noopener" underline="hover">
-                <Typography variant="body2" color="text.secondary">
-                  <Globe style={{ width: 16, height: 16, marginRight: 4 }} />
-                  Website
+                <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                  <Globe style={{ width: 16, height: 16 }} /> Website
                 </Typography>
               </Link>
             )}
           </Box>
         </Box>
-
-        {/* Content Grid */}
         <Grid container spacing={2}>
-          {/* Left Column */}
           <Grid item xs={12} sm={6}>
-            {/* Qualifications */}
             <Box sx={{ mb: 3 }}>
-              <Typography
-                variant="subtitle1"
-                fontWeight="bold"
-                gutterBottom
-                sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-              >
-                <Award style={{ width: 20, height: 20 }} />
-                Qualifications
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Award style={{ width: 20, height: 20 }} /> Qualifications
               </Typography>
               <Box sx={{ pl: 3 }}>
                 <ul style={{ margin: 0, paddingLeft: '1.5rem' }}>
-                  {faculty.qualifications.map((qual, index) => (
-                    <li key={index} style={{ marginBottom: '0.5rem' }}>
+                  {faculty.qualifications.map((qual, i) => (
+                    <li key={i} style={{ marginBottom: '0.5rem' }}>
                       <Typography variant="body2" color="text.secondary">
                         {qual}
                       </Typography>
@@ -183,63 +76,39 @@ const FacultyCard = memo(({ faculty }: { faculty: Faculty }) => {
                 </ul>
               </Box>
             </Box>
-
-            {/* Contact Information */}
             <Box sx={{ mt: 3 }}>
-              <Typography
-                variant="subtitle1"
-                fontWeight="bold"
-                gutterBottom
-                sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-              >
-                <Mail style={{ width: 20, height: 20 }} />
-                Contact Information
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Mail style={{ width: 20, height: 20 }} /> Contact Information
               </Typography>
               <Box sx={{ pl: 3 }}>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}
-                >
-                  <Mail style={{ width: 16, height: 16 }} />
-                  {faculty.email}
+                {faculty.email && (
+                  <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                    <Mail style={{ width: 16, height: 16 }} /> {faculty.email}
+                  </Typography>
+                )}
+                {faculty.phone && (
+                  <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Phone style={{ width: 16, height: 16 }} /> {faculty.phone}
+                  </Typography>
+                )}
+                <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1, mt: 1 }}>
+                  <MapPin style={{ width: 16, height: 16 }} /> {faculty.office}
                 </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}
-                >
-                  <MapPin style={{ width: 16, height: 16 }} />
-                  {faculty.office}
-                </Typography>
-                <Typography
-                  variant="body2"
-                  color="text.secondary"
-                  sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-                >
-                  <Clock style={{ width: 16, height: 16 }} />
-                  {faculty.officeHours}
+                <Typography variant="body2" color="text.secondary" sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Clock style={{ width: 16, height: 16 }} /> {faculty.officeHours}
                 </Typography>
               </Box>
             </Box>
           </Grid>
-
-          {/* Right Column */}
           <Grid item xs={12} sm={6}>
-            {/* Research Interests */}
             <Box sx={{ mb: 3 }}>
-              <Typography
-                variant="subtitle1"
-                fontWeight="bold"
-                gutterBottom
-                sx={{ display: 'flex', alignItems: 'center', gap: 1 }}
-              >
-                <Bookmark style={{ width: 20, height: 20 }} />
-Subjects               </Typography>
+              <Typography variant="subtitle1" fontWeight="bold" gutterBottom sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                <Bookmark style={{ width: 20, height: 20 }} /> Subjects
+              </Typography>
               <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, pl: 3 }}>
-                {faculty.researchInterests.map((interest, index) => (
+                {faculty.researchInterests.map((interest, i) => (
                   <Chip
-                    key={index}
+                    key={i}
                     label={interest}
                     sx={{
                       background: 'linear-gradient(to right, #4f46e5, #9333ea)',
@@ -255,48 +124,66 @@ Subjects               </Typography>
       </CardContent>
     </Card>
   );
-});
+}
 
 const FacultyPage: React.FC = () => {
-  const theme = useTheme(); // Access the current theme
+  const theme = useTheme();
+  const { data, isLoading, error } = useGetFaculties();
+
+  if (isLoading) return <Typography>Loading...</Typography>;
+  if (error) return <Typography color="error">Failed to load faculty data: {error.message}</Typography>;
+
+  const facultyData = (data ?? []).map((item) => ({
+    id: item._id,
+    name: item.name,
+    role: "Faculty",
+    // Support both new base64 images and old imagePath for backward compatibility
+    image: item.imageUrl || (item.imagePath?.replace(/^public\//, "/")) || "/default.jpg",
+    qualifications: item.qualifications ?? [],
+    researchInterests: item.subjects ?? [],
+    email: item.mail ?? "",
+    phone: item.number ?? "",
+    office: item.location ?? "N/A",
+    officeHours: "N/A",
+    website: undefined,
+  }));
 
   return (
     <Box
       sx={{
-        minHeight: "100vh",
-        background: theme.palette.mode === "dark"
-          ? "linear-gradient(to bottom right, #121212, #1e1e1e)" // Dark mode background
-          : "linear-gradient(to bottom right, #f0f4ff, #e8f0ff)", // Light mode background
+        minHeight: '100vh',
+        background:
+          theme.palette.mode === 'dark'
+            ? 'linear-gradient(to bottom right, #121212, #1e1e1e)'
+            : 'linear-gradient(to bottom right, #f0f4ff, #e8f0ff)',
       }}
     >
-      <Box sx={{ maxWidth: "1200px", mx: "auto", px: 2, py: 4 }}>
-        {/* Header */}
+      <Box sx={{ maxWidth: '1200px', mx: 'auto', px: 2, py: 4 }}>
         <Box
           sx={{
-            textAlign: "center",
+            textAlign: 'center',
             mb: 5,
             p: 4,
             borderRadius: 4,
-            background: theme.palette.mode === "dark"
-              ? "linear-gradient(to right, #333333, #444444)" // Dark mode header
-              : "linear-gradient(to right, #4f46e5, #9333ea)", // Light mode header
-            color: "white",
+            background:
+              theme.palette.mode === 'dark'
+                ? 'linear-gradient(to right, #333333, #444444)'
+                : 'linear-gradient(to right, #4f46e5, #9333ea)',
+            color: 'white',
             boxShadow: 6,
           }}
         >
           <Typography variant="h2" fontWeight="bold" gutterBottom>
             Meet Our Distinguished Faculty
           </Typography>
-          <Typography variant="h6" sx={{ maxWidth: "600px", mx: "auto" }}>
+          <Typography variant="h6" sx={{ maxWidth: '600px', mx: 'auto' }}>
             Pioneering the future of computer science through groundbreaking research and exceptional education.
           </Typography>
         </Box>
-
-        {/* Faculty Grid */}
         <Grid container spacing={4}>
           {facultyData.map((faculty) => (
             <Grid item xs={12} md={6} key={faculty.id}>
-              <FacultyCard faculty={faculty} />
+              <FacultyCard faculty={faculty} theme={theme} />
             </Grid>
           ))}
         </Grid>

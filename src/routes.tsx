@@ -6,6 +6,10 @@ import Academic from "./pages/academic";
 import Research from "./pages/research";
 import Facilities from "./pages/facilities";
 import Placements from "./pages/placements";
+import AdminDashboard from "./admin/AdminDashboard";
+import LoginPage from "./admin/components/LoginPage";
+import ProtectedRoute from "./admin/ProtectedRoute";
+import SyllabusList from "./pages/syllabus/SyllabusList";
 
 const AppRoutes = () => {
   return (
@@ -18,6 +22,16 @@ const AppRoutes = () => {
       <Route path="/faculty" element={<Faculty />} />
       <Route path="/academic" element={<Academic />} />
       <Route path="/facilities" element={<Facilities />} />
+      <Route path="/admin/login" element={<LoginPage />} />
+      <Route path="/syllabus" element={<SyllabusList />} />
+      <Route
+        path="/admin/*"
+        element={
+          <ProtectedRoute>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
     </Routes>
   );
 };

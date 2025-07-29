@@ -14,6 +14,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.15.10",
     "@mui/material": "^5.15.10",
+    "@tanstack/react-query": "^5.80.5",
     "framer-motion": "^12.6.5",
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
