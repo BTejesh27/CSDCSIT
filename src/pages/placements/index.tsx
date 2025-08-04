@@ -15,22 +15,34 @@ import WorkIcon from "@mui/icons-material/Work";
 import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import BusinessIcon from "@mui/icons-material/Business";
 import SchoolIcon from "@mui/icons-material/School";
-import { Interns, testimonials, recruiters, mouData } from "./api/Home";
+import { recruiters, mouData } from "./api/Home";
 import { useState } from "react";
+import { usePlacements } from "./api/usePlacements";
+import { useInternships } from "./api/useInternships";
 
 const stats = [
-  { icon: <WorkIcon fontSize="large" />, label: "Total Placements", value: "150+" },
+  { icon: <WorkIcon fontSize="large" />, label: "Total Placements", value: "30+" },
   { icon: <EmojiEventsIcon fontSize="large" />, label: "Highest Package", value: "₹12 LPA" },
-  { icon: <BusinessIcon fontSize="large" />, label: "Top Recruiters", value: "35+" },
-  { icon: <SchoolIcon fontSize="large" />, label: "Internships", value: "80+" },
+  { icon: <BusinessIcon fontSize="large" />, label: "Top Recruiters", value: "10+" },
+  { icon: <SchoolIcon fontSize="large" />, label: "Internships", value: "20+" },
 ];
 
 const Placements = () => {
   const theme = useTheme();
 
-  // State for show more functionality
   const [placementsToShow, setPlacementsToShow] = useState(3);
   const [internsToShow, setInternsToShow] = useState(3);
+
+  const { data: placements = [], isLoading: loadingPlacements, error: errorPlacements } = usePlacements();
+  const { data: internships = [], isLoading: loadingInternships, error: errorInternships } = useInternships();
+
+  // Debug logging
+  console.log("🔍 Placements Debug:", {
+    placements,
+    loadingPlacements,
+    errorPlacements,
+    placementsLength: placements.length
+  });
 
   const handleMorePlacements = () => setPlacementsToShow((prev) => prev + 3);
   const handleMoreInterns = () => setInternsToShow((prev) => prev + 3);
@@ -79,41 +91,71 @@ const Placements = () => {
         <Typography align="center" variant="h4" sx={{ fontWeight: "bold", mb: 3 }}>
           Top Placements
         </Typography>
-        <Grid container spacing={4} sx={{ mb: 3 }}>
-          {testimonials.slice(0, placementsToShow).map((t, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={idx}>
-              <Card
-                sx={{
-                  borderRadius: 4,
-                  boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
-                  transition: "0.3s",
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: "0 10px 20px rgba(0,0,0,0.15)",
-                  },
-                }}
-              >
-                <CardMedia component="img" height="220" image={t.image} alt={t.name} />
-                <CardContent>
-                  <Typography variant="h6" fontWeight={600}>
-                    {t.name} – {t.company}
-                  </Typography>
-                  <Typography color="text.secondary" sx={{ mt: 1 }}>
-                    "{t.message}"
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-        {placementsToShow < testimonials.length ? (
-          <Button onClick={handleMorePlacements} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
-            Show More
-          </Button>
+        {loadingPlacements ? (
+          <Typography align="center">Loading placements...</Typography>
+        ) : errorPlacements ? (
+          <Box sx={{ textAlign: 'center', p: 3 }}>
+            <Typography color="error" variant="h6">Failed to load placements</Typography>
+            <Typography color="error" sx={{ mt: 1 }}>{errorPlacements.message}</Typography>
+            <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
+              Make sure your backend server is running on http://localhost:3000
+            </Typography>
+          </Box>
+        ) : placements.length === 0 ? (
+          <Typography align="center" sx={{ py: 4 }}>No placements data available</Typography>
         ) : (
-          <Button onClick={handleLessPlacements} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
-            Show Less
-          </Button>
+          <>
+            <Grid container spacing={4} sx={{ mb: 3 }}>
+              {placements.slice(0, placementsToShow).map((t, idx) => (
+                <Grid item xs={12} sm={6} md={4} key={t._id || idx}>
+                  <Card
+                    sx={{
+                      borderRadius: 4,
+                      boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
+                      transition: "0.3s",
+                      "&:hover": {
+                        transform: "translateY(-5px)",
+                        boxShadow: "0 10px 20px rgba(0,0,0,0.15)",
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="220"
+                      image={t.imageUrl || "/default.jpg"}
+                      alt={t.studentName}
+                    />
+                    <CardContent>
+                      <Typography variant="h6" fontWeight={600}>
+                        {t.studentName} – {t.company}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        {t.role}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        {t.description}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        Package: ₹{t.package}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        Year: {t.year}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            {placementsToShow < placements.length ? (
+              <Button onClick={handleMorePlacements} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
+                Show More
+              </Button>
+            ) : (
+              <Button onClick={handleLessPlacements} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
+                Show Less
+              </Button>
+            )}
+          </>
         )}
 
         {/* Stats */}
@@ -151,42 +193,73 @@ const Placements = () => {
         <Typography align="center" variant="h4" sx={{ fontWeight: "bold", mb: 3 }}>
           Top Internships
         </Typography>
-        <Grid container spacing={4} sx={{ mb: 3 }}>
-          {Interns.slice(0, internsToShow).map((t, idx) => (
-            <Grid item xs={12} sm={6} md={4} key={idx}>
-              <Card
-                sx={{
-                  borderRadius: 4,
-                  boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
-                  transition: "0.3s",
-                  "&:hover": {
-                    transform: "translateY(-5px)",
-                    boxShadow: "0 10px 20px rgba(0,0,0,0.15)",
-                  },
-                }}
-              >
-                <CardMedia component="img" height="220" image={t.image} alt={t.name} />
-                <CardContent>
-                  <Typography variant="h6" fontWeight={600}>
-                    {t.name} – {t.company}
-                  </Typography>
-                  <Typography color="text.secondary" sx={{ mt: 1 }}>
-                    "{t.message}"
-                  </Typography>
-                </CardContent>
-              </Card>
-            </Grid>
-          ))}
-        </Grid>
-        {internsToShow < Interns.length ? (
-          <Button onClick={handleMoreInterns} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
-            Show More
-          </Button>
+        {loadingInternships ? (
+          <Typography align="center">Loading internships...</Typography>
+        ) : errorInternships ? (
+          <Box sx={{ textAlign: 'center', p: 3 }}>
+            <Typography color="error" variant="h6">Failed to load internships</Typography>
+            <Typography color="error" sx={{ mt: 1 }}>{errorInternships.message}</Typography>
+            <Typography variant="body2" sx={{ mt: 1, color: 'text.secondary' }}>
+              Make sure your backend server is running on http://localhost:3000
+            </Typography>
+          </Box>
+        ) : internships.length === 0 ? (
+          <Typography align="center" sx={{ py: 4 }}>No internships data available</Typography>
         ) : (
-          <Button onClick={handleLessInterns} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
-            Show Less
-          </Button>
+          <>
+            <Grid container spacing={4} sx={{ mb: 3 }}>
+              {internships.slice(0, internsToShow).map((t, idx) => (
+                <Grid item xs={12} sm={6} md={4} key={t._id || idx}>
+                  <Card
+                    sx={{
+                      borderRadius: 4,
+                      boxShadow: "0 6px 12px rgba(0,0,0,0.1)",
+                      transition: "0.3s",
+                      "&:hover": {
+                        transform: "translateY(-5px)",
+                        boxShadow: "0 10px 20px rgba(0,0,0,0.15)",
+                      },
+                    }}
+                  >
+                    <CardMedia
+                      component="img"
+                      height="220"
+                      image={t.imageUrl || "/default.jpg"}
+                      alt={t.studentName}
+                    />
+                    <CardContent>
+                      <Typography variant="h6" fontWeight={600}>
+                        {t.studentName} – {t.company}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        {t.role}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        {t.description}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        Stipend: ₹{t.stipend}
+                      </Typography>
+                      <Typography color="text.secondary" sx={{ mt: 1 }}>
+                        Year: {t.year}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+            {internsToShow < internships.length ? (
+              <Button onClick={handleMoreInterns} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
+                Show More
+              </Button>
+            ) : (
+              <Button onClick={handleLessInterns} variant="outlined" sx={{ display: "block", mx: "auto", mb: 4 }}>
+                Show Less
+              </Button>
+            )}
+          </>
         )}
+
         {/* Recruters*/}
      
         <Typography

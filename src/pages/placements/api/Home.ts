@@ -1,101 +1,10 @@
-import bhargavi from "./bhargavi.jpg";
-import someswarImage from "./someswar.jpg";
-import ganeshImage from "./ganesh.jpg";
+
 import wadhwani from "./wadhwani.jpg";
 import purpleline from "./purplelane.jpg";
-import bluconn from "./bluconnInterns.jpg";
-import meeami from "./meeami.jpg";
-import frejun from "./frejun.jpg";
-import Anannya from "./anannya.png";
-import purplelane2 from "./purplelane2.png";
-import revathi from "./revathi.png";
-import cognizant from "./cognizant.png";
-import root from "./root.png"
-import viswa from "./viswa.png";
-import MNC from "./MNC.png"
-export const testimonials = [
-  {
-    name: 'Bhargavi J',
-    company: 'AKRIVIA',
-    message: 'Cracked AKRIVIA SDE role after extensive placement training.',
-    image: bhargavi,
-  },
-  {
-    name: 'Someswar',
-    company: 'BOSON MOTORS',
-    message: 'Mock interviews and guidance helped me immensely.',
-    image: someswarImage,
-  },
-  {
-    name: 'Ganesh',
-    company: 'SMARTED',
-    message: 'Y Ganesh from 4/4 CSD, has secured a stellar placement at SmartED as a Business Growth Specialist with a package of 5 LPA!',
-    image: ganeshImage,
-  },
-  {
-    name: 'Anannya',
-    company: 'IntelliPaat',
-    message: 'congratulate G Y Anannya for securing an incredible 5 LPA placement at IntelliPaat as a Business Development Associate!',
-    image: Anannya,
-  },
-  {
-    name: 'Final Year Students',
-    company: 'ROOTSQUARE LABS Pvt Ltd',
-    message: ' our Students for getting selected in ROOTSQUARE LABS Pvt Ltd as Software Engineers with an annual salary package of 7.8 LPA ',
-    image: root,
-  },
-  {
-    name: '',
-    company: 'Top MNC companies',
-    message: '23 Students(with 36 offers) among 55 placement eligible students of final B.Tech CSD have been placed so far in various MNCs. ',
-    image: MNC,
-  },
-];
 
-export const Interns = [
-  {
-    name: 'csd 3rd year students',
-    company: 'Bluconn',
-    message: '8 of our students from 3/4 CSD students seclected in blueconn as  a software development intern',
-    image: bluconn,
-  },
-  {
-    name: 'Uma Subhashini',
-    company: 'Meeami Technologies',
-    message: '4/4 CSD student selected by meeami tecchnologies as a software development intern',
-    image: meeami,
-  },
-  {
-    name: 'Rama Ganesh',
-    company: 'Frejun',
-    message: '3/4 CSD student selected by frejun as a software development intern',
-    image: frejun,
-  },
-  {
-    name: 'csd 4th year students',
-    company: 'Purple Lane Pvt.',
-    message: 'students for securing paid internships as UI/UX Designers at Purple Lane Pvt.',
-    image: purplelane2,
-  },
-  {
-    name: 'Revathi Pathiwada',
-    company: 'Algo8',
-    message: 'B.Tech 4th year Computer Science & Design, has secured a UI/UX Design Intern position at Algo8',
-    image: revathi,
-  },
-  {
-    name: 'Final Year Students',
-    company: 'cognizant',
-    message: 'students from 4/4 CSD, who have been selected for Paid Internships at Cognizant',
-    image: cognizant,
-  },
-  {
-    name: 'Konakala Vasanthi',
-    company: 'Vyapara(OPC) Pvt. Ltd',
-    message: 'Konakala Vasanthi from 4/4 CSD,has been selected as a Digital Marketing Intern by ViswaVardhan Vyapara(OPC) Pvt. Ltd!',
-    image: viswa,
-  },
-];
+
+
+
 
 export const recruiters = [
   'data:image/png;base64,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',
