@@ -3,7 +3,7 @@ import Home from "./pages/home";
 import About from "./pages/about";
 import Faculty from "./pages/faculty";
 import Academic from "./pages/academic";
-import Research from "./pages/research";
+import Research from "./pages/projects";
 import Facilities from "./pages/facilities";
 import Placements from "./pages/placements";
 import AdminDashboard from "./admin/AdminDashboard";

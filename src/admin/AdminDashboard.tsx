@@ -7,10 +7,12 @@ import { NewsForm } from "./components/NewsForm";
 import SyllabusForm from "./components/SyllabusForm";
 import { Box, Typography, Container } from "@mui/material";
 import AdminSidebar from "./AdminSidebar";
+import { ProjectForm } from "./components/ProjectForm";
+import { StartupForm } from "./components/StartupForm";
 
 export default function AdminDashboard() {
   const [view, setView] = useState<
-    "faculty" | "placements" | "internships" | "events" | "news" | "syllabus"
+    "faculty" | "placements" | "internships" | "events" | "news" | "syllabus" | "projects" | "startups"
   >("faculty");
 
   return (
@@ -40,6 +42,8 @@ export default function AdminDashboard() {
           {view === "events" && <EventForm />}
           {view === "news" && <NewsForm />}
           {view === "syllabus" && <SyllabusForm />}
+          {view === "projects" && <ProjectForm />}
+          {view === "startups" && <StartupForm />}
         </Box>
       </Container>
     </Box>
