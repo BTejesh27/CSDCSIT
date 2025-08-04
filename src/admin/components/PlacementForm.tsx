@@ -17,6 +17,7 @@ interface Placement {
 }
 
 export function PlacementForm() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
   const [form, setForm] = useState({
     studentName: "",
     company: "",
@@ -81,10 +82,10 @@ export function PlacementForm() {
         payload.imageName = selectedImage.name;
       }
 
-      let url = "http://localhost:3000/placements";
+      let url = `${BACKEND_URL}/placements`;
       let method: "POST" | "PUT" = "POST";
       if (editId) {
-        url = `http://localhost:3000/placements/${editId}`;
+        url = `${BACKEND_URL}/placements/${editId}`;
         method = "PUT";
       }
 
@@ -152,7 +153,7 @@ export function PlacementForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/placements/${deleteId}`, {
+      const res = await fetch(`${BACKEND_URL}/placements/${deleteId}`, {
         method: "DELETE",
       });
       const result = await res.text();

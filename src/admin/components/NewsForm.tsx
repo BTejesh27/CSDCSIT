@@ -4,6 +4,7 @@ import { Edit, Delete } from '@mui/icons-material';
 import { useNews } from "../../pages/home/api/useNews";
 
 export function NewsForm() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -61,10 +62,10 @@ export function NewsForm() {
         imageName: selectedImage ? selectedImage.name : "",
       };
 
-      let url = "http://localhost:3000/news";
+      let url = `${BACKEND_URL}/news`;
       let method: "POST" | "PUT" = "POST";
       if (editId) {
-        url = `http://localhost:3000/news/${editId}`;
+        url = `${BACKEND_URL}/news/${editId}`;
         method = "PUT";
       }
 
@@ -126,7 +127,7 @@ export function NewsForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/news/${deleteId}`, {
+      const res = await fetch(`${BACKEND_URL}/news/${deleteId}`, {
         method: "DELETE",
       });
       const result = await res.text();

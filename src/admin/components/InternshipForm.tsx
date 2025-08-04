@@ -4,6 +4,7 @@ import { Edit, Delete } from '@mui/icons-material';
 import { useInternships } from "../../pages/placements/api/useInternships";
 
 export function InternshipForm() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL || "";
   const [form, setForm] = useState({
     studentName: "",
     company: "",
@@ -67,10 +68,11 @@ export function InternshipForm() {
         payload.imageName = selectedImage.name;
       }
 
-      let url = "http://localhost:3000/internships";
+
+      let url = `${BACKEND_URL}/internships`;
       let method: "POST" | "PUT" = "POST";
       if (editId) {
-        url = `http://localhost:3000/internships/${editId}`;
+        url = `${BACKEND_URL}/internships/${editId}`;
         method = "PUT";
       }
 
@@ -138,7 +140,7 @@ export function InternshipForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/internships/${deleteId}`, {
+      const res = await fetch(`${BACKEND_URL}/internships/${deleteId}`, {
         method: "DELETE",
       });
       const result = await res.text();

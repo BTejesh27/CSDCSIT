@@ -6,6 +6,7 @@ import { useEvents } from "../../pages/home/api/useEvents";
 
 
 export function EventForm() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -65,10 +66,10 @@ export function EventForm() {
         imageName: selectedImage ? selectedImage.name : "",
       };
 
-      let url = "http://localhost:3000/events";
+      let url = `${BACKEND_URL}/events`;
       let method: "POST" | "PUT" = "POST";
       if (editId) {
-        url = `http://localhost:3000/events/${editId}`;
+        url = `${BACKEND_URL}/events/${editId}`;
         method = "PUT";
       }
 
@@ -133,7 +134,7 @@ export function EventForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/events/${deleteId}`, {
+      const res = await fetch(`${BACKEND_URL}/events/${deleteId}`, {
         method: "DELETE",
       });
       const result = await res.text();

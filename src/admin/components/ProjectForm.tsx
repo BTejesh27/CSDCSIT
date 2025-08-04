@@ -6,6 +6,7 @@ import { Edit, Delete } from '@mui/icons-material';
 import { useProjects } from "../../pages/projects/api/useProjects";
 
 export function ProjectForm() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -38,10 +39,10 @@ export function ProjectForm() {
         year: Number(form.year),
       };
 
-      let url = "http://localhost:3000/projects";
+      let url = `${BACKEND_URL}/projects`;
       let method: "POST" | "PUT" = "POST";
       if (editId) {
-        url = `http://localhost:3000/projects/${editId}`;
+        url = `${BACKEND_URL}/projects/${editId}`;
         method = "PUT";
       }
 
@@ -94,7 +95,7 @@ export function ProjectForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/projects/${deleteId}`, {
+      const res = await fetch(`${BACKEND_URL}/projects/${deleteId}`, {
         method: "DELETE",
       });
       const result = await res.text();

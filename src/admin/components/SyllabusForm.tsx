@@ -4,6 +4,7 @@ import { Edit, Delete } from '@mui/icons-material';
 import { useGetSyllabi } from '../../pages/syllabus/getSyllabi';
 
 export default function SyllabusForm() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
   // Edit and delete dialog state (must be inside the component)
   const [editId, setEditId] = useState<string | null>(null);
   const [editData, setEditData] = useState<any>(null);
@@ -21,7 +22,7 @@ export default function SyllabusForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/syllabus/${deleteId}`, { method: 'DELETE' });
+      const res = await fetch(`${BACKEND_URL}/syllabus/${deleteId}`, { method: 'DELETE' });
       const result = await res.text();
       if (res.ok) {
         setMessage(`✅ ${result}`);
@@ -59,7 +60,7 @@ export default function SyllabusForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/syllabus/${editId}`, {
+      const res = await fetch(`${BACKEND_URL}/syllabus/${editId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(editData),
@@ -126,7 +127,7 @@ export default function SyllabusForm() {
       formData.append("department", form.department);
       formData.append("file", selectedFile);
 
-      const res = await fetch("http://localhost:3000/syllabus/upload", {
+      const res = await fetch(`${BACKEND_URL}/syllabus/upload`, {
         method: "POST",
         body: formData,
       });
@@ -287,7 +288,7 @@ export default function SyllabusForm() {
                   <Typography variant="body2">Year: {syllabus.year} | Branch: {syllabus.branch} | Dept: {syllabus.department}</Typography>
                   <Typography variant="caption" color="text.secondary">Uploaded: {syllabus.uploadedAt ? syllabus.uploadedAt.slice(0, 10) : ''}</Typography>
                   <Link
-                    href={`http://localhost:3000/${syllabus.filePath.replace(/\\/g, '/')}`}
+                    href={`${BACKEND_URL}/${syllabus.filePath.replace(/\\/g, '/')}`}
                     target="_blank"
                     rel="noopener"
                     underline="hover"

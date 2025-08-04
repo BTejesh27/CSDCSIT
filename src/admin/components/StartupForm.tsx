@@ -4,6 +4,7 @@ import { Edit, Delete } from '@mui/icons-material';
 import { useStartups } from "../../pages/projects/api/useStartups";
 
 export function StartupForm() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
   const [form, setForm] = useState({
     title: "",
     description: "",
@@ -36,10 +37,10 @@ export function StartupForm() {
         year: Number(form.year),
       };
 
-      let url = "http://localhost:3000/startups";
+      let url = `${BACKEND_URL}/startups`;
       let method: "POST" | "PUT" = "POST";
       if (editId) {
-        url = `http://localhost:3000/startups/${editId}`;
+        url = `${BACKEND_URL}/startups/${editId}`;
         method = "PUT";
       }
 
@@ -92,7 +93,7 @@ export function StartupForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/startups/${deleteId}`, {
+      const res = await fetch(`${BACKEND_URL}/startups/${deleteId}`, {
         method: "DELETE",
       });
       const result = await res.text();

@@ -4,6 +4,7 @@ import { Edit, Delete } from '@mui/icons-material';
 import { useGetFaculties } from "../../pages/faculty/api/getFaculties";
 
 export default function FacultyForm() {
+  const BACKEND_URL = import.meta.env.VITE_BACKEND_API_URL || "http://localhost:3000";
   const [form, setForm] = useState({
     name: "",
     mail: "",
@@ -65,10 +66,10 @@ export default function FacultyForm() {
         imageName: selectedImage ? selectedImage.name : "",
       };
 
-      let url = "http://localhost:3000/faculty";
+      let url = `${BACKEND_URL}/faculty`;
       let method: "POST" | "PUT" = "POST";
       if (editId) {
-        url = `http://localhost:3000/faculty/${editId}`;
+        url = `${BACKEND_URL}/faculty/${editId}`;
         method = "PUT";
       }
 
@@ -136,7 +137,7 @@ export default function FacultyForm() {
     setIsUploading(true);
     setMessage(null);
     try {
-      const res = await fetch(`http://localhost:3000/faculty/${deleteId}`, {
+      const res = await fetch(`${BACKEND_URL}/faculty/${deleteId}`, {
         method: "DELETE",
       });
       const result = await res.text();
