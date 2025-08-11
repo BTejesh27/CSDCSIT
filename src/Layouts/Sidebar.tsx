@@ -41,7 +41,6 @@ const menuItems = [
   { text: "Faculty", icon: <PeopleIcon />, path: "/faculty" },
   { text: "Syllabus", icon: <SchoolIcon />, path: "/syllabus" },
   { text: "Academic", icon: <CalendarIcon />, path: "/academic" },
-  { text: "Facilities", icon: <DomainIcon />, path: "/facilities" },
 ];
 
 const Sidebar = ({
