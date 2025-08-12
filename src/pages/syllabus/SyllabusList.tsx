@@ -33,6 +33,7 @@ import { styled } from '@mui/material/styles';
 
 const BRANCHES = ["CSD", "CSIT"];
 const YEARS = [1, 2, 3, 4];
+const backendUrl = import.meta.env.VITE_BACKEND_API_URL || process.env.REACT_APP_BACKEND_API_URL;
 
 // Styled components for 3D effects
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -431,7 +432,7 @@ const SyllabusList = () => {
                     <PDFPreviewContainer>
                       <Box
                         component="a"
-                        href={`http://localhost:3000/${syllabus.filePath.replace(/\\/g, '/')}`}
+                        href={`${backendUrl}/${syllabus.filePath.replace(/\\/g, '/')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         sx={{ 
@@ -442,7 +443,7 @@ const SyllabusList = () => {
                         }}
                       >
                         <iframe
-                          src={`http://localhost:3000/${syllabus.filePath.replace(/\\/g, '/')}`}
+                          src={`${backendUrl}/${syllabus.filePath.replace(/\\/g, '/')}`}
                           title={syllabus.subject}
                         />
                       </Box>
@@ -500,7 +501,7 @@ const SyllabusList = () => {
                     <Button
                       variant="contained"
                       startIcon={<ViewIcon />}
-                      href={`http://localhost:3000/${syllabus.filePath.replace(/\\/g, '/')}`}
+                      href={`${backendUrl}/${syllabus.filePath.replace(/\\/g, '/')}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       sx={{
