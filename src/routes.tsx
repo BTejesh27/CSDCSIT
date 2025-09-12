@@ -10,6 +10,7 @@ import AdminDashboard from "./admin/AdminDashboard";
 import LoginPage from "./admin/components/LoginPage";
 import ProtectedRoute from "./admin/ProtectedRoute";
 import SyllabusList from "./pages/syllabus/SyllabusList";
+import StudentPage from "./pages/student";
 
 const AppRoutes = () => {
   return (
@@ -24,6 +25,7 @@ const AppRoutes = () => {
       <Route path="/facilities" element={<Facilities />} />
       <Route path="/admin/login" element={<LoginPage />} />
       <Route path="/syllabus" element={<SyllabusList />} />
+      <Route path="/student" element={<StudentPage />} />
       <Route
         path="/admin/*"
         element={

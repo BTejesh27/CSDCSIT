@@ -1,6 +1,6 @@
 import { Box, List, ListItemButton, ListItemText } from "@mui/material";
 
-type ViewType = "faculty" | "placements" | "internships" | "events" | "news" | "syllabus" | "projects" | "startups";
+type ViewType = "faculty" | "placements" | "internships" | "events" | "news" | "syllabus" | "projects" | "startups" | "students";
 interface AdminSidebarProps {
   view: ViewType;
   setView: (view: ViewType) => void;
@@ -14,7 +14,8 @@ const items: { key: ViewType; label: string }[] = [
   { key: "news", label: "News" },
   { key: "syllabus", label: "Syllabus" },
   { key: "projects", label: "Projects" },
-  { key: "startups", label: "Startups" }
+  { key: "startups", label: "Startups" },
+  { key: "students", label: "Students" }
 ];
 
 export default function AdminSidebar({ view, setView }: AdminSidebarProps) {
